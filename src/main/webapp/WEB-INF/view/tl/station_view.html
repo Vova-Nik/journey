@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/reset.css}"/>
+    <meta charset="UTF-8">
+    <title>Station</title>
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <div class="head-logo"></div>
+        <div class="head-text">
+            РАСПИСАНИЕ
+        </div>
+    </div>
+    <div class="pageInfo" th:text="${pageInfo}"></div>
+
+    <div class="list vehicle_view_header">
+        <div class="vehicle_view_id">ID</div>
+        <div class="station_view_column">Название</div>
+        <div class="station_view_column">Долгота</div>
+        <div class="station_view_column">Широта</div>
+        <div class="station_view_column">Год основания</div>
+        <div class="station_view_column">Тип</div>
+        <div class="station_view_info">Краткие сведения</div>
+    </div>
+
+    <div class="list">
+        <div class="vehicle_view_id" th:text="${entity.id}"></div>
+        <div class="station_view_column" th:text="${entity.name}"></div>
+        <div class="station_view_column" th:text="${entity.longitude}"></div>
+        <div class="station_view_column" th:text="${entity.latitude}"></div>
+        <div class="station_view_column" th:text="${entity.foundationYear}"></div>
+        <div class="station_view_column" th:text="${entity.stationType}"></div>
+        <div class="station_view_info" th:text="${entity.description}"></div>
+    </div>
+    <div class="station_view_routes">
+    <div class="station_view_route" th:each="route, iterator: ${routes}">
+        <div th:text="${route}"></div>
+    </div>
+    </div>
+    <div class="fff">Bye</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+
+body {
+    font-family: sans-serif;
+    font-size: smaller;
+    background-color: #050505;
+    color: lightgoldenrodyellow;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* *********************************************************** */
+.pageInfo {
+    font-size: 32px;
+    margin: 50px 10%;
+}
+
+.text_block {
+    width: 80%;
+    margin: 10px auto;
+}
+
+.head {
+    display: flex;
+}
+
+.head-logo {
+    height: 256px;
+    width: 400px;
+    background-image: url("https://i.fbcd.co/products/resized/resized-750-500/429b2ed047fdfaf8825ce2cdf48ccb522c5ac0c0ceb79ad999046ae075717ff9.jpg");
+    background-size: cover;
+}
+
+.head-text {
+    padding-left: 10%;
+    line-height: 200px;
+    font-size: xx-large;
+    font-weight: bold;
+    height: 256px;
+}
+
+a {
+    text-decoration: none;
+    color: yellow;
+}
+
+a:hover {
+    color: #faf7ed;
+    font-weight: bold;
+}
+
+.button {
+    text-align: center;
+    /*border: 2px solid blue;*/
+    cursor: pointer;
+}
+.footer{
+    font-size: x-small;
+    margin: 200px auto;
+}
+/* ************************************************* */
+
+.list {
+    display: flex;
+    flex-direction: row;
+    /*margin: 0 10px;*/
+    width: 100%;
+}
+
+.list > div {
+    padding: 3px 12px;
+    border: #ac0757 1px solid;
+}
+
+.table_head {
+    font-weight: bold;
+    color: #a3a312;
+}
+
+.column:nth-of-type(-n+2) {
+    width: 48px;
+}
+
+.column:nth-of-type(n+3) {
+    width: 20%;
+}
+
+.column:last-of-type {
+    width: 100%;
+}
+
+.list > .button {
+    width: 220px;
+    border: #ac0757 1px solid;
+}
+
+.npp {
+    width: 48px;
+}
+
+/****************** client_view ************************/
+
+.client_view_id {
+    width: 48px;
+}
+
+.client_view_column {
+    width: 20%;
+}
+
+.client_view_header {
+    font-weight: bold;
+    color: #bdbd39;
+}
+
+/****************** vehicle_view ************************/
+
+.vehicle_view_id {
+    width: 48px;
+}
+
+.vehicle_view_column {
+    width: 20%;
+}
+
+.vehicle_view_header {
+    font-weight: bold;
+    color: #bdbd39;
+}
+
+/****************** station ************************/
+
+.station_view_id {
+    width: 48px;
+}
+
+.station_view_column {
+    width: 10%;
+}
+
+.station_view_header {
+    font-weight: bold;
+    color: #bdbd39;
+}
+
+.station_view_info {
+    width: calc(50% - 48px);
+    color: #bdbd39;
+}
+
+.station_view_routes {
+    margin: 32px 0;
+    color: #2ed90f;
+    width: 100%;
+}
+.station_view_route{
+    margin: 5px 10px 5px 10%;
+}
+/****************** route ************************/
+
+.route_view_id {
+    width: 48px;
+}
+
+.route_view_column {
+    width: 10%;
+}
+
+.route_view_header {
+    font-weight: bold;
+    color: #bdbd39;
+}
+
+.route_view_info {
+    width: calc(50% - 48px);
+    color: #bdbd39;
+}
+
+.route_view_stations {
+    margin: 32px 0;
+
+    color: #2ed90f;
+    width: 100%;
+}
+.route_view_station{
+    margin: 10px 10px 5px 10%;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <meta charset="UTF-8">
+    <title>Vehicles</title>
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <div class="head-logo"></div>
+        <div class="head-text">
+            РАСПИСАНИЕ
+        </div>
+    </div>
+    <div class="pageInfo" th:text="${pageInfo}"></div>
+
+    <div class="list vehicle_view_header">
+        <div class="vehicle_view_id">ID</div>
+        <div class="vehicle_view_column">Name</div>
+        <div class="vehicle_view_column">Type</div>
+        <div class="vehicle_view_column">Capacity</div>
+    </div>
+
+    <div class="list">
+        <div class="vehicle_view_id" th:text="${entity.id}"></div>
+        <div class="vehicle_view_column" th:text="${entity.name}"></div>
+        <div class="vehicle_view_column" th:text="${entity.vehicleType}"></div>
+        <div class="vehicle_view_column" th:text="${entity.capacity}"></div>
+    </div>
+
+</div>
+</body>
+</html>

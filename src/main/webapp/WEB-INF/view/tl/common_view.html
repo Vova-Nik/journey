@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="headerFragment">
+    <title>Ticket</title>
+    <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <meta charset="UTF-8">
+    <!--    <title th:text="${title}></title>-->
+
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <div class="head-logo"></div>
+        <div class="head-text">
+            РАСПИСАНИЕ
+        </div>
+    </div>
+
+    <div class="pageInfo" th:text="${pageInfo}"></div>
+
+    <div class="list">
+        <div class="npp table_head">#</div>
+        <div class="table_head column" th:each="string : ${headers}">
+            <span th:text="${string}"></span>
+        </div>
+        <nav class="button table_head">Show</nav>
+    </div>
+
+    <div class="list" th:each="entity, iterator: ${entities}">
+        <div  class="npp" th:text="${iterator.count}"></div>
+        <div class="column" th:each="string : ${entity}">
+            <span th:text="${string}"></span>
+        </div>
+
+        <nav class="button">
+            <a th:href="@{{url}(url=${url}+${entity[0]})}">Подробно</a>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

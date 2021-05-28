@@ -1,9 +1,10 @@
-package org.hillel.controller;
+package org.hillel.controller.jsp;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,8 +15,6 @@ import java.io.*;
 import java.time.LocalTime;
 import java.util.Objects;
 
-//https://www.baeldung.com/spring-requestmapping
-
 @Controller
 public class WelcomeController {
 
@@ -23,8 +22,9 @@ public class WelcomeController {
     ServletContext servletContext;
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    public String welcomePage(HttpServletRequest request, HttpServletResponse response){
+    public String welcomePage(HttpServletRequest request, HttpServletResponse response, Model model){
         request.setAttribute("thetime", LocalTime.now().toString());
+        model.addAttribute("vvv","vvvvvvvvvvvvvvvv");
         return "welcome";
     }
 

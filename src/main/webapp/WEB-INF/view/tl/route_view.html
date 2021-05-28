@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/reset.css}"/>
+    <meta charset="UTF-8">
+    <title>Station</title>
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <div class="head-logo"></div>
+        <div class="head-text">
+            РАСПИСАНИЕ
+        </div>
+    </div>
+    <div class="pageInfo" th:text="${pageInfo}"></div>
+
+    <div class="list route_view_header">
+        <div class="route_view_id">ID</div>
+        <div class="route_view_column">Номер</div>
+        <div class="route_view_column">Из</div>
+        <div class="route_view_column">В</div>
+        <div class="route_view_column">Периодичность</div>
+        <div class="route_view_column">Время отправления</div>
+        <div class="route_view_info">Транспортное средство</div>
+    </div>
+    <!--    String[] tableHead = new String[]{"ID", "Route #", "From", "To", "Period", "Departure", "Vehicle"};-->
+    <div class="list">
+        <div class="route_view_id" th:text="${entity.id}"></div>
+        <div class="route_view_column" th:text="${entity.name}"></div>
+        <div class="route_view_column" th:text="${entity.stationFrom}"></div>
+        <div class="route_view_column" th:text="${entity.stationTo}"></div>
+        <div class="route_view_column" th:text="${entity.departurePeriod}"></div>
+        <div class="route_view_column" th:text="${entity.departureTime}"></div>
+        <div class="route_view_info" th:text="${entity.type}"></div>
+    </div>
+    <div class="station_view_routes">
+        <div class="station_view_route" th:each="station, iterator: ${stations}">
+            <div th:text="${station}"></div>
+        </div>
+    </div>
+    <div class="fff">Bye</div>
+</div>
+</body>
+</html>

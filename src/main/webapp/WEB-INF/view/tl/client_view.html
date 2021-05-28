@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="headerFragment">
+    <title>Ticket</title>
+    <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<div class="container">
+    <div class="head">
+        <div class="head-logo"></div>
+        <div class="head-text">
+            РАСПИСАНИЕ
+        </div>
+    </div>
+
+    <div class="pageInfo" th:text="${pageInfo}"></div>
+
+        <div class="list">
+            <div class="client_view_id client_view_header">ID</div>
+            <div class="client_view_column client_view_header">Name</div>
+            <div class="client_view_column client_view_header">Surname</div>
+            <div class="client_view_column client_view_header">e-mail</div>
+            <div class="client_view_column client_view_header">Password</div>
+        </div>
+
+        <div class="list">
+            <div class="client_view_id" th:text="${entity.id}"></div>
+            <div class="client_view_column" th:text="${entity.name}"></div>
+            <div class="client_view_column" th:text="${entity.surname}"></div>
+            <div class="client_view_column" th:text="${entity.email}"></div>
+            <div class="client_view_column" th:text="${entity.pwd}"></div>
+        </div>
+    <h3>Тут будет список поездок когда либо купленный данным персоном</h3>
+
+    <div class=footer"  th:insert="~{footer :: copy}"></div>
+</div>
+https://habr.com/ru/post/351844/
+</body>
+</html>
