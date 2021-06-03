@@ -1,6 +1,8 @@
 package org.hillel.service;
 
 import org.hillel.config.RootConfig;
+import org.hillel.dto.dto.QueryParam;
+import org.hillel.persistence.entity.ClientEntity;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
 import org.hillel.persistence.entity.enums.StationType;
@@ -11,6 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 
 import java.sql.Time;
 import java.util.List;
@@ -37,7 +40,7 @@ class StationServiceTest {
 
 
     @Test
-    void addSrarions() {
+    void addStations() {
 
         StationEntity st = new StationEntity("Ternopil");
         st.setStationType(StationType.TRANSIT);
@@ -80,42 +83,15 @@ class StationServiceTest {
     void addRoutesToStations() {
         RouteEntity route = null;
         StationEntity station = null;
-/*
-        RouteEntity route = new RouteEntity("Odessa", "Kyiv", VehicleType.TRAIN);
-        Example<RouteEntity> example = Example.of(route);
-        route = routeService.findAllByExample(example).get(0);
-
-        StationEntity station = stationService.findOneByName("Gmerinka");
-        stationService.addRoute(station, route);
-
-        station = stationService.findOneByName("Vapnyarka");
-        stationService.addRoute(station, route);
-
-        station = stationService.findOneByName("Fastov");
-        stationService.addRoute(station, route);
-
-        route = new RouteEntity("Kyiv", "Odessa", VehicleType.TRAIN);
-        example = Example.of(route);
-        route = routeService.findAllByExample(example).get(0);
-
-        station = stationService.findOneByName("Gmerinka");
-        stationService.addRoute(station, route);
-
-        station = stationService.findOneByName("Vapnyarka");
-        stationService.addRoute(station, route);
-
-        station = stationService.findOneByName("Fastov");
-        stationService.addRoute(station, route);
-        */
 
 
-       station = stationService.findOneByName("Ternopil");
+       station = stationService.findOneByName("Kharkiv");
 
-        route = routeService.findById(23L);
+        route = routeService.findById(27L);
         stationService.addRoute(station, route);
         routeService.addStation(route.getId(),station);
 
-        route = routeService.findById(24L);
+        route = routeService.findById(28L);
         stationService.addRoute(station, route);
         routeService.addStation(route.getId(),station);
 
@@ -127,15 +103,6 @@ class StationServiceTest {
         stationService.addRoute(station, route);
         routeService.addStation(route.getId(),station);
 
-        route = routeService.findById(15L);
-        stationService.addRoute(station, route);
-        routeService.addStation(route.getId(),station);
-
-        route = routeService.findById(16L);
-        stationService.addRoute(station, route);
-        routeService.addStation(route.getId(),station);
-
-        System.out.println(stationService.getConnectedRoutes(station.getId()));
 
         /*
         route = routeService.findOneByName("12");
@@ -164,5 +131,13 @@ class StationServiceTest {
         System.out.println(route);
     }
 
+    @Test
+    void anull(){
+        QueryParam param =null;
+        Page<StationEntity> page;
+        page = stationService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+        assertEquals(8, page.getSize());
+    }
 
 }

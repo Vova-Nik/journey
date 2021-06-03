@@ -2,17 +2,23 @@ package org.hillel.controller.tl;
 
 import org.hillel.dto.converter.RouteMapper;
 import org.hillel.dto.converter.StationMapper;
+import org.hillel.dto.dto.QueryParam;
 import org.hillel.dto.dto.StationDto;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
+import org.hillel.persistence.entity.VehicleEntity;
 import org.hillel.service.TicketClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,17 +29,42 @@ public class StationTLController {
     private final TicketClient ticketClient;
     private final StationMapper mapper;
     private final RouteMapper routeMapper;
-    int TABLE_SIZE = 6;
+    private final int TABLE_SIZE = 6;
+    private final QueryParam queryParam;
+    private String rootUrl;
 
     @Autowired
     public StationTLController(TicketClient ticketClient, StationMapper mapper, RouteMapper routeMapper) {
         this.ticketClient = ticketClient;
         this.mapper = mapper;
-        this.routeMapper=routeMapper;
+        this.routeMapper = routeMapper;
+        queryParam = new QueryParam();
     }
 
     @GetMapping("/stations")
-    public String homeVehiclePage(Model model) {
+    public String homeVehiclePage(Model model, HttpServletRequest request,
+                                  @RequestParam(required = false) String sortColumn,
+                                  @RequestParam(required = false) String sortDirection,
+                                  @RequestParam(required = false) String filterField,
+                                  @RequestParam(required = false) String filterValue,
+                                  @RequestParam(required = false) String pageNumber,
+                                  @RequestParam(required = false) String pageSize,
+                                  @RequestParam(required = false) String filterOperation
+    ) {
+        queryParam.buildQueryParam(
+                sortColumn,
+                sortDirection,
+                filterField,
+                filterValue,
+                pageNumber,
+                pageSize,
+                filterOperation
+        );
+        long totalPges = ticketClient.countStations() / queryParam.getPageSize() + 1;
+        model.addAttribute("pager", (queryParam.getPageNumber() + 1) + " / " + totalPges);
+
+        rootUrl = request.getRequestURL().toString();
+
         model.addAttribute("url", "station/");
         model.addAttribute("title", "Stations");
         model.addAttribute("pageInfo", "Станции");
@@ -41,7 +72,7 @@ public class StationTLController {
         String[] tableHead = new String[]{"ID", "name", "type", "long", "lat", "founded in"};
         model.addAttribute("headers", tableHead);
 
-        List<StationEntity> allEntities = ticketClient.getAllStations();
+        Page<StationEntity> allEntities = ticketClient.getFilteredPagedStations(queryParam);
         List<String[]> allEntitiesDto = allEntities.stream()
                 .map(mapper::stationToStationDto)
                 .map(dto -> {
@@ -71,8 +102,27 @@ public class StationTLController {
         mav.addObject("entity", dto);
         Set<RouteEntity> routes = ticketClient.getConnectedRoutes(id);
         List<String> routeDtos = new ArrayList<>();
-        routes.forEach(route->routeDtos.add(routeMapper.routeToRouteDto(route).toString()));
-        mav.addObject("routes",routeDtos);
+        routes.forEach(route -> routeDtos.add(routeMapper.routeToRouteDto(route).toString()));
+        mav.addObject("routes", routeDtos);
         return mav;
     }
+
+    @GetMapping("/station/next")
+    public RedirectView showNext(Model model) {
+        if (queryParam.getPageNumber() < ticketClient.countStations() / queryParam.getPageSize())
+            queryParam.nextPage();
+        return new RedirectView(rootUrl);
+    }
+
+    @GetMapping("/station/prev")
+    public RedirectView showPrev(Model model) {
+        queryParam.previousPage();
+        return new RedirectView(rootUrl);
+    }
 }
+/*
+http://localhost:8080/tl/stations?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3
+http://localhost:8080/tl/stations?pageSize=6&sortColumn=name&sortDirection=desc
+http://localhost:8080/tl/stations?pageSize=6&sortColumn=id&pageNumber=1
+http://localhost:8080/tl/stations?pageNumber=2
+*/

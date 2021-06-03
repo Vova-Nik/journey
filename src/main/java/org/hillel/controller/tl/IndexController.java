@@ -9,4 +9,9 @@ public class IndexController {
     public String homePage() {
         return "index";
     }
+
+    @GetMapping("/help")
+    public String help() {
+        return "help";
+    }
 }

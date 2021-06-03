@@ -16,4 +16,9 @@ public class TripDto {
     private int tickets;
     private int sold;
     private LocalDate departureDate;
+
+    //Calculated values
+    private int freePlaces;
+    private String departure;
+    private String arrival;
 }

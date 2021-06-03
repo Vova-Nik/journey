@@ -1,14 +1,16 @@
 package org.hillel.service;
 
 import org.hillel.config.RootConfig;
+import org.hillel.dto.dto.QueryParam;
 import org.hillel.persistence.entity.ClientEntity;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.data.domain.Page;
+import java.util.List;
 
 class ClientServiceTest {
 
@@ -33,14 +35,85 @@ class ClientServiceTest {
 
     @Test
     void initClients() {
-/*        clientService.save(new ClientEntity("Bob", "Dilan", "Dilan@gmail.com"));
-        clientService.save(new ClientEntity("David", "Gilmour", "Gilmour@gmail.com"));
-        clientService.save(new ClientEntity("Jean-Michel", "Jarre", "Jarre@gmail.com"));
-        clientService.save(new ClientEntity("Paul", "Mauriat", "Mauriat@gmail.com"));
-        clientService.save(new ClientEntity("James", "Last", "Last@gmail.com"));
-        clientService.save(new ClientEntity("Ritchie", "Blackmore", "Blackmore@gmail.com"));
-        clientService.save(new ClientEntity("Mick", "Jagger", "Jagger@gmail.com"));
-        clientService.save(new ClientEntity("Ronald-James", "Padavona", "Padavona@gmail.com"));
-        clientService.save(new ClientEntity("Ozzy", "Osbourne", "Osbourne@gmail.com"));*/
+
+        clientService.save(new ClientEntity("Joey", "Kramer", "Kramer@gmail.com"));
+        clientService.save(new ClientEntity("Frank", "Sinatra", "Sinatra@gmail.com"));
+        clientService.save(new ClientEntity("James", "Hetfield", "Hetfield@gmail.com"));
+        clientService.save(new ClientEntity("Lars", "Ulrich", "Ulrich@gmail.com"));
+        clientService.save(new ClientEntity("Kirk", "Hammett", "Hammett@gmail.com"));
+        clientService.save(new ClientEntity("Robert", "Trujillo", "Trujillo@gmail.com"));
+        clientService.save(new ClientEntity("Tarja", "Turunen", "Turunen@gmail.com"));
+    }
+
+    @Test
+    void complex() {
+        QueryParam param = new QueryParam();
+//        param.setFilterValue(" ");
+//        param.setFilterKey("name");
+//        param.setFilterOperation("more");
+//        param.setSortColumn("name");
+
+//        List<ClientEntity> page = clientService.getComplex(param);
+//        System.out.println(page);
+        Page<ClientEntity> page;
+
+        param.setPageSize(5);
+        param.setPageNumber(0);
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+
+        param.setPageSize(8);
+        param.setPageNumber(1);
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+
+        param.setPageSize(8);
+        param.setPageNumber(2);
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+
+        assertEquals(8, page.getSize());
+        try{
+            param.setSortColumn("fgfsdffgsefgsefgsefg");
+            page = clientService.getFilteredPaged(param);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertTrue(e.getMessage().contains("Insufficient column name for sorting of Client"));
+        }
+
+        param.setPageSize(6);
+        param.setPageNumber(2);
+        param.setSortColumn("id");
+
+        param.setPageSize(8);
+        param.setPageNumber(0);
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+
+        param.setPageSize(4);
+        param.setPageNumber(4);
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+
+
+    }
+
+    @Test
+    void filter(){
+        QueryParam param = new QueryParam();
+        param.setFilterValue("Bob");
+        Page<ClientEntity> page;
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+    }
+
+    @Test
+    void anull(){
+        QueryParam param =null;
+        Page<ClientEntity> page;
+        page = clientService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+        assertEquals(8, page.getSize());
     }
 }
+
