@@ -3,7 +3,7 @@ package org.hillel.persistence.jpa.repository.specification;
 import org.hibernate.query.criteria.internal.OrderImpl;
 import org.hillel.dto.dto.FilterOperation;
 import org.hillel.dto.dto.QueryParam;
-import org.hillel.persistence.entity.ClientEntity;
+import org.hillel.persistence.entity.UserEntity;
 import org.hillel.persistence.entity.VehicleEntity;
 import org.hillel.persistence.entity.VehicleEntity_;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,7 +1,7 @@
 package org.hillel.service;
 
 import org.hillel.dto.dto.QueryParam;
-import org.hillel.persistence.entity.ClientEntity;
+import org.hillel.persistence.entity.UserEntity;
 import org.hillel.persistence.entity.TripEntity;
 import org.hillel.persistence.entity.VehicleEntity;
 import org.hillel.persistence.jpa.repository.VehicleJPARepository;

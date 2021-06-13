@@ -78,11 +78,10 @@ body {
 
 /* ******************* footer ********************** */
 
-
 .footer {
     display: flex;
-    width: 80%;
-    margin: 1vh auto;
+    width: 50%;
+    margin: 5vh auto;
 }
 .footer_left{
     width: 50%;
@@ -297,4 +296,15 @@ body {
 }
 .help_page.text{
     color: tomato;
+}
+
+.user_role_password{
+    font-size: smaller;
+    margin: 10px auto 10px 70%;
+    width: 29%;
+    display: flex;
+}
+
+.user_role_password>div{
+    margin: 0 10px 0 0;
 }

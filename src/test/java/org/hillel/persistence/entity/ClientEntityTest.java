@@ -10,15 +10,15 @@ class ClientEntityTest {
 
     @Test
     void setEmail() {
-        ClientEntity client = new ClientEntity("Bob", "Bobber", "bob@email.com");
+        UserEntity client = new UserEntity("Bob", "Bobber", "bob@email.com");
         assertTrue(client.isValid());
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("Bob", "Bobber", " "));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity(" ", "Bobber", " "));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("", "Bobber", " "));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("Bob", "Bobber", "bob"));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("Bob", "Bobber", "@email.com"));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("Bob", "Bobber", "@#$%^&(-@email.com"));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("Bob", "Bobber", "bob@email.com "));
-        assertThrows(IllegalArgumentException.class, () -> new ClientEntity("Bob", "Bobber", " bob@email.com"));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("Bob", "Bobber", " "));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity(" ", "Bobber", " "));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("", "Bobber", " "));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("Bob", "Bobber", "bob"));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("Bob", "Bobber", "@email.com"));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("Bob", "Bobber", "@#$%^&(-@email.com"));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("Bob", "Bobber", "bob@email.com "));
+        assertThrows(IllegalArgumentException.class, () -> new UserEntity("Bob", "Bobber", " bob@email.com"));
     }
 }

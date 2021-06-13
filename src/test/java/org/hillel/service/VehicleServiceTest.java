@@ -18,7 +18,7 @@ class VehicleServiceTest {
     static StationService stationService;
     static RouteService routeService;
     static VehicleService vehicleService;
-    static ClientService clientService;
+    static UserService clientService;
 
     @BeforeAll
     public static void setUp() {
@@ -27,7 +27,7 @@ class VehicleServiceTest {
         vehicleService = applicationContext.getBean(VehicleService.class);
         stationService = applicationContext.getBean(org.hillel.service.StationService.class);
         routeService = applicationContext.getBean(RouteService.class);
-        clientService = applicationContext.getBean(ClientService.class);
+        clientService = applicationContext.getBean(UserService.class);
     }
 
     @Test

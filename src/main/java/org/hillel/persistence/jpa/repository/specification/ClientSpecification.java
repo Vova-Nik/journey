@@ -11,7 +11,7 @@ import javax.persistence.criteria.*;
 
 public class ClientSpecification {
 
-    public static Specification<ClientEntity> filtered(QueryParam param) {
+    public static Specification<UserEntity> filtered(QueryParam param) {
         return (root, query, criteriaBuilder) -> {
             if (param.getFilterValue().equals("*")) {
                 return criteriaBuilder.greaterThan(root.get("name"), criteriaBuilder.literal(" "));
@@ -24,10 +24,10 @@ public class ClientSpecification {
         };
     }
 
-    public static Specification<ClientEntity> byQueryParam(QueryParam param) {
-        return new Specification<ClientEntity>() {
+    public static Specification<UserEntity> byQueryParam(QueryParam param) {
+        return new Specification<UserEntity>() {
             @Override
-            public Predicate toPredicate(@NonNull Root<ClientEntity> root,
+            public Predicate toPredicate(@NonNull Root<UserEntity> root,
                                          @NonNull CriteriaQuery<?> query,
                                          @NonNull CriteriaBuilder criteriaBuilder) {
 

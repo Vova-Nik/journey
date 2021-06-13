@@ -4,11 +4,8 @@ import org.hillel.dto.converter.RouteMapper;
 import org.hillel.dto.converter.StationMapper;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.dto.dto.RouteDto;
-import org.hillel.dto.dto.StationDto;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
-import org.hillel.persistence.entity.VehicleEntity;
-import org.hillel.persistence.entity.enums.VehicleType;
 import org.hillel.service.TicketClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,12 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller

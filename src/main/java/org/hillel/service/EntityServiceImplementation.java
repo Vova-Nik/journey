@@ -9,12 +9,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.io.UncheckedIOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class EntityServiceImplementation<E extends AbstractEntity<ID>, ID extends Serializable>{
+public abstract class EntityServiceImplementation<E extends AbstractEntity<ID>, ID extends Serializable> {
 
     private final Class<E> entityClass;
     private CommonRepository<E, ID> repository;
@@ -37,10 +39,12 @@ public abstract class EntityServiceImplementation<E extends AbstractEntity<ID>, 
             repository.deleteById(id);
     }
 
+
     @Transactional(readOnly = true)
-    public E findById(Long id){
-        if(Objects.isNull(id) || id<0) throw new IllegalArgumentException("EntityServiceImplementation.findById insufficient id");
-        return repository.findById(id).orElseThrow(()->new IllegalArgumentException("EntityServiceImplementation.findById Entity with id = " + id + " not found"));
+    public E findById(Long id) {
+        if (Objects.isNull(id) || id < 0)
+            throw new IllegalArgumentException("EntityServiceImplementation.findById insufficient id");
+        return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("EntityServiceImplementation.findById Entity with id = " + id + " not found"));
     }
 
     @Transactional(readOnly = true)
@@ -78,37 +82,42 @@ public abstract class EntityServiceImplementation<E extends AbstractEntity<ID>, 
     }
 
     @Transactional(readOnly = true)
-    public List<E> findByIds(final Long... ids){
-        if(Objects.isNull(ids) || ids.length==0) throw new IllegalArgumentException("EntityServiceImplementation.findByIds illegal  parameters");
+    public List<E> findByIds(final Long... ids) {
+        if (Objects.isNull(ids) || ids.length == 0)
+            throw new IllegalArgumentException("EntityServiceImplementation.findByIds illegal  parameters");
         return repository.findAllById(Arrays.asList(ids));
     }
 
     @Transactional(readOnly = true)
-    public List<E> findAllCtive(){
+    public List<E> findAllCtive() {
         return repository.findAllActive();
     }
 
     @Transactional
-    public void disableById(final Long id){
-        if(Objects.isNull(id) || id<0) throw new IllegalArgumentException("EntityServiceImplementation.disableById illegal id");
+    public void disableById(final Long id) {
+        if (Objects.isNull(id) || id < 0)
+            throw new IllegalArgumentException("EntityServiceImplementation.disableById illegal id");
         repository.disableById(id);
     }
 
     @Transactional
-    public void enableById(final Long id){
-        if(Objects.isNull(id) || id<0) throw new IllegalArgumentException("EntityServiceImplementation.disableById illegal id");
+    public void enableById(final Long id) {
+        if (Objects.isNull(id) || id < 0)
+            throw new IllegalArgumentException("EntityServiceImplementation.disableById illegal id");
         repository.enableById(id);
     }
 
     @Transactional(readOnly = true)
-    public List<E> findByName(final String name){
-        if(Objects.isNull(name) || name.length()<3) throw new IllegalArgumentException("EntityServiceImplementation.findByName illegal name parameter");
+    public List<E> findByName(final String name) {
+        if (Objects.isNull(name) || name.length() < 3)
+            throw new IllegalArgumentException("EntityServiceImplementation.findByName illegal name parameter");
         return repository.findByName(name);
     }
 
     @Transactional(readOnly = true)
-    public  List<E> findByNameActive(final String name){
-        if(Objects.isNull(name) || name.length()<3) throw new IllegalArgumentException("EntityServiceImplementation.findByNameActive illegal name parameter");
+    public List<E> findByNameActive(final String name) {
+        if (Objects.isNull(name) || name.length() < 3)
+            throw new IllegalArgumentException("EntityServiceImplementation.findByNameActive illegal name parameter");
         return repository.findByNameActive(name);
     }
 
@@ -131,19 +140,19 @@ public abstract class EntityServiceImplementation<E extends AbstractEntity<ID>, 
     }
 
     @Transactional(readOnly = true)
-    public List<E> findAllByExample(Example<E> example){
+    public List<E> findAllByExample(Example<E> example) {
         return repository.findAll(example);
     }
 
     @Transactional
-    public E findOneByName(String name){
+    public E findOneByName(String name) {
         return repository.findOneByName(name);
     }
 
 
     abstract boolean isValid(E entity);
 
-     boolean checkIfColumnExists(final String columnName) {
+    boolean checkIfColumnExists(final String columnName) {
         Field[] fields;
         try {
             Class<?> clas = Class.forName(entityClass.getName());

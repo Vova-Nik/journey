@@ -3,7 +3,7 @@ package org.hillel.controller.tl;
 import org.hillel.dto.converter.VehicleMapper;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.dto.dto.VehicleDto;
-import org.hillel.persistence.entity.ClientEntity;
+import org.hillel.persistence.entity.UserEntity;
 import org.hillel.persistence.entity.VehicleEntity;
 import org.hillel.service.TicketClient;
 import org.springframework.beans.factory.annotation.Autowired;

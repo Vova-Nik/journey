@@ -11,7 +11,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-@ComponentScan({"org.hillel.controller.tl", "org.hillel.controller.api", "org.hillel.dto.converter"})
+@ComponentScan({"org.hillel.controller.tl", "org.hillel.dto.converter"})
 public class WebTLConfig {
 
     @Bean

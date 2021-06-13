@@ -27,16 +27,16 @@
     <div class="help_page text">Внимание!. В рамках одной сущности не заданные в запросе параметры могут оставаться от предыдущих хапросов.</div>
     <div class="help_page text">Нумерация страниц в get с нуля, в view с единицы.</div>
 
-    <div class="help_page header">Clients get request examples</div>
+    <div class="help_page header">Users get request examples</div>
     <div class="help_page menu_item"><a
-            th:href="@{/tl/clients?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=20}">//tl/clients?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3</a>
+            th:href="@{/tl/users?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=20}">//tl/users?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3</a>
     </div>
-    <div class="help_page menu_item"><a th:href="@{/tl/clients?pageSize=6&sortColumn=name&sortDirection=desc}">//tl/clients?pageSize=6&sortColumn=name&sortDirection=desc</a>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageSize=6&sortColumn=name&sortDirection=desc}">//tl/users?pageSize=6&sortColumn=name&sortDirection=desc</a>
     </div>
-    <div class="help_page menu_item"><a th:href="@{/tl/clients?pageSize=6&sortColumn=id&pageNumber=1}">//tl/clients?pageSize=6&sortColumn=id&pageNumber=1</a>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageSize=16&sortColumn=id&pageNumber=1}">//tl/users?pageSize=16&sortColumn=id&pageNumber=1</a>
     </div>
-    <div class="help_page menu_item"><a th:href="@{/tl/clients?pageNumber=2}">/tl/clients?pageNumber=2</a></div>
-    <div class="help_page menu_item"><a th:href="@{/tl/clients?pageNumber=0&filterField=name&filterValue=Bob&filterOperation=LIKE}">//tl/clients?pageNumber=0&filterField=name&filterValue=Bob&filterOperation=LIKE</a></div>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageNumber=2}">/tl/clients?pageNumber=2</a></div>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageNumber=0&filterField=name&filterValue=Bob&filterOperation=LIKE}">//tl/users?pageNumber=0&filterField=name&filterValue=Bob&filterOperation=LIKE</a></div>
 
 
     <div class="help_page header">Vehicles get request examples</div>

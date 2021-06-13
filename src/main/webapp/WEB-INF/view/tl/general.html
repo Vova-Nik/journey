@@ -7,21 +7,25 @@
 <body>
     <div class="main_menu" th:fragment="menu">
 <!--        <div class="menu_item"><a th:href="@{/tl/index}">Home</a></div>-->
-        <div class="menu_item"><a th:href="@{/tl/clients}">Клиенты</a></div>
+        <div class="menu_item"><a th:href="@{/tl/users}">Users (ROLE_TICKET)</a></div>
         <div class="menu_item"><a th:href="@{/tl/vehicles}">Транспортные средства</a> </div>
         <div class="menu_item"><a th:href="@{/tl/stations}">Станции</a></div>
         <div class="menu_item"><a th:href="@{/tl/routes}">Маршруты</a></div>
         <div class="menu_item"><a th:href="@{/tl/trips}">Рейсы</a></div>
+        <div class="menu_item"><a th:href="@{/rest}"> Rest API (ROLE_ADMIN)</a></div>
         <div class="menu_item"><a th:href="@{/tl/help}">Help!</a></div>
     </div>
 
-<div class="head" th:fragment="header">
+    <div class="head" th:fragment="header">
     <a th:href="@{/tl/index}"><div class="head-logo"></div></a>
         <div class="head-text">
             JOURNE-Y
         </div>
 </div>
 
+    <div class="user_role_password"> <div>dilan@gmail.com</div> - ROLE_ADMIN  123</div>
+    <div class="user_role_password"> <div>gilmour@gmail.com</div> - ROLE_TICKET 123</div>
+    <div class="user_role_password"> <div>admin@ttt.ua</div> - ROLE_ADMIN, ROLE_TICKET 123</div>
 
 <footer class="footer" th:fragment="footer">
     <div class="footer_left">

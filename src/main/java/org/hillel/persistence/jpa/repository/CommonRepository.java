@@ -16,9 +16,6 @@ public interface CommonRepository<E extends Persistable<ID>, ID extends Serializ
     @Query("select e from #{#entityName} e where e.active = true")
     List<E> findAllActive();
 
-//    @Query("select e from #{#entityName}")
-//    List<E> findAll();
-
     @Query("select e from #{#entityName} e where e.active = true and e.name = :name")
     List<E> findByNameActive(@Param("name") String name);
 

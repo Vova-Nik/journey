@@ -10,11 +10,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -55,15 +59,15 @@ public class RootConfig {
             @Value("${hibernate.hbm2ddl}") String hbm2ddl,
             @Value("${hibernate.show_sql}") String show_sql,
             @Value("${hibernate.query.timeout}") int timeout
-    ){
+    ) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setPackagesToScan("org.hillel.persistence.entity");
         emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         Properties properties = new Properties();
         properties.put("hibernate.dialect", PostgreSQL10Dialect.class.getName());
-        properties.put("hibernate.hbm2ddl.auto",hbm2ddl); //create create-drop update validate
-        properties.put("hibernate.show_sql",show_sql);
+        properties.put("hibernate.hbm2ddl.auto", hbm2ddl); //create create-drop update validate
+        properties.put("hibernate.show_sql", show_sql);
         properties.put("javax.persistence.query.timeout", timeout);
         emf.setJpaProperties(properties);
         return emf;
@@ -73,10 +77,15 @@ public class RootConfig {
     PlatformTransactionManager transactionManager(
             EntityManagerFactory entityManagerFactory,
             DataSource dataSource
-    ){
+    ) {
         JpaTransactionManager TransactionManager = new JpaTransactionManager();
         TransactionManager.setEntityManagerFactory(entityManagerFactory);
         TransactionManager.setDataSource(dataSource);
         return TransactionManager;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 }

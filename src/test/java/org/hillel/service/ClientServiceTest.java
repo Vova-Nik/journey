@@ -2,7 +2,7 @@ package org.hillel.service;
 
 import org.hillel.config.RootConfig;
 import org.hillel.dto.dto.QueryParam;
-import org.hillel.persistence.entity.ClientEntity;
+import org.hillel.persistence.entity.UserEntity;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +20,7 @@ class ClientServiceTest {
     static RouteService routeService;
     static VehicleService vehicleService;
     static JourneyService journeyService;
-    static ClientService clientService;
+    static UserService clientService;
 
     @BeforeAll
     public static void setUp() {
@@ -29,20 +29,20 @@ class ClientServiceTest {
         vehicleService = applicationContext.getBean(VehicleService.class);
         stationService = applicationContext.getBean(org.hillel.service.StationService.class);
         routeService = applicationContext.getBean(RouteService.class);
-        clientService = applicationContext.getBean(ClientService.class);
+        clientService = applicationContext.getBean(UserService.class);
     }
 
 
     @Test
     void initClients() {
 
-        clientService.save(new ClientEntity("Joey", "Kramer", "Kramer@gmail.com"));
-        clientService.save(new ClientEntity("Frank", "Sinatra", "Sinatra@gmail.com"));
-        clientService.save(new ClientEntity("James", "Hetfield", "Hetfield@gmail.com"));
-        clientService.save(new ClientEntity("Lars", "Ulrich", "Ulrich@gmail.com"));
-        clientService.save(new ClientEntity("Kirk", "Hammett", "Hammett@gmail.com"));
-        clientService.save(new ClientEntity("Robert", "Trujillo", "Trujillo@gmail.com"));
-        clientService.save(new ClientEntity("Tarja", "Turunen", "Turunen@gmail.com"));
+        clientService.save(new UserEntity("Joey", "Kramer", "Kramer@gmail.com"));
+        clientService.save(new UserEntity("Frank", "Sinatra", "Sinatra@gmail.com"));
+        clientService.save(new UserEntity("James", "Hetfield", "Hetfield@gmail.com"));
+        clientService.save(new UserEntity("Lars", "Ulrich", "Ulrich@gmail.com"));
+        clientService.save(new UserEntity("Kirk", "Hammett", "Hammett@gmail.com"));
+        clientService.save(new UserEntity("Robert", "Trujillo", "Trujillo@gmail.com"));
+        clientService.save(new UserEntity("Tarja", "Turunen", "Turunen@gmail.com"));
     }
 
     @Test
@@ -55,7 +55,7 @@ class ClientServiceTest {
 
 //        List<ClientEntity> page = clientService.getComplex(param);
 //        System.out.println(page);
-        Page<ClientEntity> page;
+        Page<UserEntity> page;
 
         param.setPageSize(5);
         param.setPageNumber(0);
@@ -102,7 +102,7 @@ class ClientServiceTest {
     void filter(){
         QueryParam param = new QueryParam();
         param.setFilterValue("Bob");
-        Page<ClientEntity> page;
+        Page<UserEntity> page;
         page = clientService.getFilteredPaged(param);
         page.forEach(System.out::println);
     }
@@ -110,7 +110,7 @@ class ClientServiceTest {
     @Test
     void anull(){
         QueryParam param =null;
-        Page<ClientEntity> page;
+        Page<UserEntity> page;
         page = clientService.getFilteredPaged(param);
         page.forEach(System.out::println);
         assertEquals(8, page.getSize());

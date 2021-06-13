@@ -1,6 +1,7 @@
 package org.hillel.service;
 
 import org.hillel.dto.dto.QueryParam;
+import org.hillel.exceptions.UnableToRemove;
 import org.hillel.persistence.entity.*;
 import org.hillel.persistence.entity.enums.VehicleType;
 import org.hillel.persistence.jpa.repository.specification.TripSpecification;
@@ -15,7 +16,7 @@ import java.util.*;
 @Component
 public class TicketClient {
 
-    private ClientService clientService;
+    private UserService userService;
     private JourneyService journeyService;
     private RouteService routeService;
     private StationService stationService;
@@ -67,153 +68,264 @@ public class TicketClient {
 
     }
 
-
-    /** client */
+    /**
+     * user
+     */
     @Autowired
-    public void setClientService(ClientService service){
-        if(Objects.isNull(service)) throw new IllegalArgumentException("Can not create ticket client bean, client Service is empty");
-        this.clientService = service;
-    }
-    public void createClient(ClientEntity entity){
-        clientService.save(entity);
-    }
-    public ClientEntity getClientById(Long id){
-        return clientService.findById(id);
-    }
-    public List<ClientEntity> getAllClients(){
-        return clientService.findAllCtive();
+    public void setUserService(UserService service) {
+        if (Objects.isNull(service))
+            return;
+        this.userService = service;
     }
 
-    public Page<ClientEntity> getFilteredPagedClients(QueryParam param){
-        return clientService.getFilteredPaged(param);
-    }
-    public Long countClients(){
-        return clientService.count();
+    public UserEntity createUser(UserEntity entity) {
+        UserEntity userEntity = null;
+        try {
+            userEntity = userService.create(entity);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return userEntity;
     }
 
+    public UserEntity getUserById(Long id) {
+        UserEntity userEntity = null;
+        try {
+            userEntity = userService.findById(id);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return userEntity;
+    }
 
-    /** Journey */
+    public List<UserEntity> getAllUsers() {
+        List<UserEntity> users = new ArrayList<>();
+        try {
+            users = userService.findAllCtive();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return users;
+    }
+
+    public Page<UserEntity> getFilteredPagedUsers(QueryParam param) {
+        return userService.getFilteredPaged(param);
+    }
+
+    public Long countUsers() {
+        long count = 0;
+        try {
+            count = userService.count();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
+
+    public boolean existsByEmail(String email) {
+        boolean result = false;
+        try {
+            result = userService.existsByEmail(email);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public UserEntity getByEmail(String email) {
+        UserEntity userEntity = null;
+        try {
+            userEntity = userService.getByEmail(email);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return userEntity;
+    }
+
+    public UserEntity updateUser(UserEntity entity) {
+        UserEntity userEntity = null;
+        try {
+            userEntity = userService.update(entity);
+        } catch (IllegalArgumentException  e) {
+            System.out.println(e.getMessage());
+        }
+        return userEntity;
+    }
+
+    public UserEntity deleteUser(UserEntity entity) {
+        UserEntity userEntity = null;
+        try {
+            userEntity = userService.remove(entity);
+        } catch (IllegalArgumentException  e) {
+            System.out.println(e.getMessage());
+        }
+        return userEntity;
+    }
+
+    /**
+     * Journey
+     */
     @Autowired
-    public void setJourneyService(JourneyService service){
-        if(Objects.isNull(service)) throw new IllegalArgumentException("Can not create ticket client bean,  journey Service is empty");
+    public void setJourneyService(JourneyService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create ticket user bean,  journey Service is empty");
         this.journeyService = service;
     }
-    public void createJourney(JourneyEntity entity){
+
+    public void createJourney(JourneyEntity entity) {
         journeyService.save(entity);
     }
-    public JourneyEntity getJourneyById(Long id){
+
+    public JourneyEntity getJourneyById(Long id) {
         return journeyService.findById(id);
     }
 
-    public List<JourneyEntity> getAllJourneys(){
+    public List<JourneyEntity> getAllJourneys() {
         return journeyService.findAllCtive();
     }
 
 
-    /** Route */
+    /**
+     * Route
+     */
     @Autowired
-    public void setRouteService(RouteService service){
-        if(Objects.isNull(service)) throw new IllegalArgumentException("Can not create ticket client bean,  Route  Service is empty");
+    public void setRouteService(RouteService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create ticket client bean,  Route  Service is empty");
         this.routeService = service;
     }
-    public void createRoute(RouteEntity entity){
+
+    public void createRoute(RouteEntity entity) {
         routeService.save(entity);
     }
-    public RouteEntity getRouteById(Long id){
+
+    public RouteEntity getRouteById(Long id) {
         return routeService.findById(id);
     }
-    public List<RouteEntity> getAllRoutes(){
+
+    public List<RouteEntity> getAllRoutes() {
         return routeService.findAllCtive();
     }
-    public List<StationEntity> getRouteStations(Long id){
+
+    public List<StationEntity> getRouteStations(Long id) {
         return routeService.getStationsOnRoute(id);
     }
-    public List<RouteEntity> getAllRoutesByPage(int page, int size, String sort){
+
+    public List<RouteEntity> getAllRoutesByPage(int page, int size, String sort) {
         return routeService.findActiveSortedByPage(page, size, sort);
     }
-    public Long countRoutes(){
+
+    public Long countRoutes() {
         return routeService.count();
     }
-    public Page<RouteEntity> getFilteredPagedRoutes(QueryParam param){
+
+    public Page<RouteEntity> getFilteredPagedRoutes(QueryParam param) {
         return routeService.getFilteredPaged(param);
     }
 
-    /** Station */
+    /**
+     * Station
+     */
     @Autowired
-    public void setStationService(StationService service){
-        if(Objects.isNull(service)) throw new IllegalArgumentException("Can not create ticket client bean,  Station  Service is empty");
+    public void setStationService(StationService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create ticket client bean,  Station  Service is empty");
         this.stationService = service;
     }
-    public void createStation(StationEntity entity){
+
+    public void createStation(StationEntity entity) {
         stationService.save(entity);
     }
-    public StationEntity getStationById(Long id){
+
+    public StationEntity getStationById(Long id) {
         return stationService.findById(id);
     }
-    public List<StationEntity> getAllStations(){
+
+    public List<StationEntity> getAllStations() {
         return stationService.findAllCtive();
     }
-    public Set<RouteEntity> getConnectedRoutes(Long id){
+
+    public Set<RouteEntity> getConnectedRoutes(Long id) {
         return stationService.getConnectedRoutes(id);
     }
-    public List<StationEntity> getAllStationsByPage(int page, int size, String sort){
+
+    public List<StationEntity> getAllStationsByPage(int page, int size, String sort) {
         return stationService.findActiveSortedByPage(page, size, sort);
     }
-    public Long countStations(){
+
+    public Long countStations() {
         return stationService.count();
     }
-    public Page<StationEntity> getFilteredPagedStations(QueryParam param){
+
+    public Page<StationEntity> getFilteredPagedStations(QueryParam param) {
         return stationService.getFilteredPaged(param);
     }
 
-    /** Trip */
+    /**
+     * Trip
+     */
     @Autowired
-    public void setTripService(TripService service){
-        if(Objects.isNull(service)) throw new IllegalArgumentException("Can not create ticket client bean,  Trip  Service is empty");
+    public void setTripService(TripService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create ticket client bean,  Trip  Service is empty");
         this.tripService = service;
     }
-    public void createTrip(TripEntity entity){
+
+    public void createTrip(TripEntity entity) {
         tripService.save(entity);
     }
-    public TripEntity getTripById(Long id){
+
+    public TripEntity getTripById(Long id) {
         return tripService.findById(id);
     }
-    public List<TripEntity> getAllTrips(){
+
+    public List<TripEntity> getAllTrips() {
         return tripService.findAllCtive();
     }
-    public List<TripEntity> getAllTripsByPage(int page, int size, String sort){
+
+    public List<TripEntity> getAllTripsByPage(int page, int size, String sort) {
         return tripService.findActiveSortedByPage(page, size, sort);
     }
-    public Long countTrips(){
+
+    public Long countTrips() {
         return tripService.count();
     }
-    public Page<TripEntity> getFilteredPagedTrips(QueryParam param){
+
+    public Page<TripEntity> getFilteredPagedTrips(QueryParam param) {
         return tripService.getFilteredPaged(param);
     }
 
-    /** Vehicle */
+    /**
+     * Vehicle
+     */
     @Autowired
-    public void setVehicleService(VehicleService service){
-        if(Objects.isNull(service)) throw new IllegalArgumentException("Can not create ticket client bean,  vehicle Service is empty");
+    public void setVehicleService(VehicleService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create ticket client bean,  vehicle Service is empty");
         this.vehicleService = service;
     }
-    public VehicleEntity getVehicleById(Long id){
+
+    public VehicleEntity getVehicleById(Long id) {
         return vehicleService.findById(id);
     }
-    public List<VehicleEntity> getAllVehicles(){
+
+    public List<VehicleEntity> getAllVehicles() {
         return vehicleService.findAllCtive();
     }
-    public void  createVehicle(final VehicleEntity entity){
+
+    public void createVehicle(final VehicleEntity entity) {
         vehicleService.save(entity);
     }
-    public List<VehicleEntity> getAllVehiclesByPage(int page, int size, String sort){
+
+    public List<VehicleEntity> getAllVehiclesByPage(int page, int size, String sort) {
         return vehicleService.findActiveSortedByPage(page, size, sort);
     }
-    public Long countVehicles(){
+
+    public Long countVehicles() {
         return vehicleService.count();
     }
 
-    public Page<VehicleEntity> getFilteredPagedVehicles(QueryParam param){
+    public Page<VehicleEntity> getFilteredPagedVehicles(QueryParam param) {
         return vehicleService.getFilteredPaged(param);
     }
 }

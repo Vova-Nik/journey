@@ -3,7 +3,6 @@ package org.hillel.service;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hillel.config.RootConfig;
 import org.hillel.dto.dto.QueryParam;
-import org.hillel.persistence.entity.ClientEntity;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.TripEntity;
 import org.hillel.persistence.entity.VehicleEntity;
@@ -33,7 +32,7 @@ class TripServiceTest {
     static StationService stationService;
     static RouteService routeService;
     static VehicleService vehicleService;
-    static ClientService clientService;
+    static UserService clientService;
     static TripService tripService;
     RouteEntity route;
     VehicleEntity vehicle;
@@ -65,7 +64,7 @@ class TripServiceTest {
         vehicleService = applicationContext.getBean(VehicleService.class);
         stationService = applicationContext.getBean(org.hillel.service.StationService.class);
         routeService = applicationContext.getBean(RouteService.class);
-        clientService = applicationContext.getBean(ClientService.class);
+        clientService = applicationContext.getBean(UserService.class);
         tripService = applicationContext.getBean(TripService.class);
     }
 

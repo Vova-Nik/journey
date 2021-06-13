@@ -2,7 +2,6 @@ package org.hillel.service;
 
 import org.hillel.config.RootConfig;
 import org.hillel.dto.dto.QueryParam;
-import org.hillel.persistence.entity.ClientEntity;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
 import org.hillel.persistence.entity.enums.StationType;

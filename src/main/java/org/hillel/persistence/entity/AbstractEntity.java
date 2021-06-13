@@ -37,4 +37,7 @@ public abstract class AbstractEntity<ID extends Serializable> implements Persist
         return true;
     }
 
+    public void resetId(){
+        this.id = null;
+    }
 }
