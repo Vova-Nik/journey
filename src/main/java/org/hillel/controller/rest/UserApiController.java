@@ -1,5 +1,6 @@
 package org.hillel.controller.rest;
 
+import io.swagger.annotations.ApiOperation;
 import org.hillel.dto.converter.UserMapper;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.dto.dto.UserDto;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +39,9 @@ public class UserApiController {
     /* *************************************** get all *********************************************/
     @GetMapping(
             path = "/users",
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-
+    @ApiOperation(value = "get all users", tags = "users")
     @ResponseBody
     public ResponseEntity<List<UserDto>> users() {
         if (ticketClient.countUsers() > 1000) {
@@ -60,11 +61,10 @@ public class UserApiController {
     @CrossOrigin
     @GetMapping(
             path = "/user",
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ResponseBody
-
+    @ApiOperation(value = "get one user by user (id is mandatory)", tags = "users")
     public ResponseEntity<UserDto> getUser(HttpServletRequest request, @RequestParam("id") Long id) {
         UserDto userDto = null;
         if (id == null || id < 0) {
@@ -81,7 +81,7 @@ public class UserApiController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-
+    @ApiOperation(value = "create user", tags = "users")
     @ResponseBody
     public ResponseEntity<UserDto> persistClient(@RequestBody UserDto userDto) {
         UserEntity userEntity = mapper.userDtoToEntity(userDto);
@@ -89,10 +89,10 @@ public class UserApiController {
         if (userEntity.isValid()) {
             userEntity.resetId();
             UserEntity createdUserEntity = ticketClient.createUser(userEntity);
-                if (createdUserEntity.equals(userEntity)) {
-                    UserDto createdUserDto = mapper.userToDto(createdUserEntity);
-                    return ResponseEntity.status(HttpStatus.OK).body(createdUserDto);
-                }
+            if (createdUserEntity.equals(userEntity)) {
+                UserDto createdUserDto = mapper.userToDto(createdUserEntity);
+                return ResponseEntity.status(HttpStatus.OK).body(createdUserDto);
+            }
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).header("Unable to create user. User with such email already exists").body(userDto);
     }
@@ -105,6 +105,7 @@ public class UserApiController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ResponseBody
+    @ApiOperation(value = "update", tags = "users")
     public ResponseEntity<UserDto> updateClient(@RequestBody UserDto userDto) {
         UserEntity userEntity = mapper.userDtoToEntity(userDto);
         if (userEntity.isValid()) {
@@ -124,7 +125,8 @@ public class UserApiController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
 
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
+    @ApiOperation(value = "delete user", tags = "users")
     @ResponseBody
     public ResponseEntity<UserDto> deleteClient(@RequestBody UserDto userDto) {
         UserEntity userEntity = mapper.userDtoToEntity(userDto);

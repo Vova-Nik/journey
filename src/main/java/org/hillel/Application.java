@@ -42,9 +42,9 @@ public class Application implements WebApplicationInitializer {
         FilterRegistration.Dynamic charsetFilter = servletContext.addFilter("charsetFilter", cef);
         charsetFilter.addMappingForUrlPatterns(null, true, "/*");
 
-        DelegatingFilterProxy filter = new DelegatingFilterProxy("springSecurityFilterChain");
-        servletContext.addFilter("springSecurityFilterChain", filter)
-                .addMappingForUrlPatterns(null, true, "/*");
+//        DelegatingFilterProxy filter = new DelegatingFilterProxy("springSecurityFilterChain");
+//        servletContext.addFilter("springSecurityFilterChain", filter)
+//                .addMappingForUrlPatterns(null, true, "/*");
     }
 
 }
