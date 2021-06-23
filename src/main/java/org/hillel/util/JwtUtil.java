@@ -32,7 +32,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis()+(60*30*1000)))
-                .signWith(SignatureAlgorithm.RS512, secretKey).compact();
+                .signWith(SignatureAlgorithm.HS512, secretKey).compact();
     }
 
     public boolean validate(String token){

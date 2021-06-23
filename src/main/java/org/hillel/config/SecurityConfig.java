@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
@@ -33,7 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/V2/api-docs", "/configuration/ui", "/configuration/**",
-                        "/swagger-resources/**", "/swagger-ui.html", "/webjars/**");
+                        "/swagger-resources/**", "/swagger-ui.html", "/webjars/**")
+                .antMatchers("/api/V2/api-docs", "/api/configuration/ui", "/api/configuration/**",
+                        "/api/swagger-resources/**", "/api/swagger-ui.html", "/api/webjars/**");
     }
 
 /*

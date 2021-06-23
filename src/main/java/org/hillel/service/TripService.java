@@ -24,7 +24,7 @@ import java.util.Objects;
 @Service("TripService")
 public class TripService extends EntityServiceImplementation<TripEntity, Long> {
 
-    private TripJPARepository tripRepository;
+    private final TripJPARepository tripRepository;
 
     @Autowired
     public TripService(TripJPARepository repository) {
