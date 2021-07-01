@@ -17,7 +17,7 @@ public class StationDto {
 
     private String foundationYear;
     private StationType stationType;
-    private Set<RouteEntity> routes;
+//    private Set<RouteEntity> routes;
 
     @Override
     public String toString() {

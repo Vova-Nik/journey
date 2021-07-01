@@ -124,6 +124,16 @@ public class TripService extends EntityServiceImplementation<TripEntity, Long> {
     }
 
     @Transactional(readOnly = true)
+    public List<TripEntity> getIn(List<Long> routeIds) {
+        return tripRepository.findAll(TripSpecification.routesIn(routeIds));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TripEntity> getByRouteAndDate(final List<Long> routeIds, final LocalDate date) {
+        return tripRepository.findAll(TripSpecification.routesIn(routeIds).and(TripSpecification.findByDate(date)));
+    }
+
+    @Transactional(readOnly = true)
     public Page<TripEntity> getFilteredPaged(QueryParam param) {
         param = checkInput(param);
         PageRequest page = PageRequest.of(param.getPageNumber(), param.getPageSize());

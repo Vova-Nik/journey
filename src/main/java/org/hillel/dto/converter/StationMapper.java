@@ -30,10 +30,10 @@ public class StationMapper {
         LocalDateTime ldt = LocalDateTime.ofInstant(station.getFoundation(), ZoneId.of("Europe/Kiev"));
         stationDto.setFoundationYear(String.valueOf(ldt.getYear()));
 
-        Set<RouteEntity> set = station.getRoutes();
-        if (set != null) {
-            stationDto.setRoutes(new HashSet<RouteEntity>(set));
-        }
+//        Set<RouteEntity> set = station.getRoutes();
+//        if (set != null) {
+//            stationDto.setRoutes(new HashSet<RouteEntity>(set));
+//        }
 
         return stationDto;
     }
@@ -54,10 +54,10 @@ public class StationMapper {
         stationEntity.setFoundation(Instant.parse(station.getFoundationYear()+"-00-00T00:00:00.00Z"));
 
         stationEntity.setStationType(station.getStationType());
-        Set<RouteEntity> set = station.getRoutes();
-        if (set != null) {
-            stationEntity.setRoutes(new HashSet<RouteEntity>(set));
-        }
+//        Set<RouteEntity> set = station.getRoutes();
+//        if (set != null) {
+//            stationEntity.setRoutes(new HashSet<RouteEntity>(set));
+//        }
 
         return stationEntity;
     }

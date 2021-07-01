@@ -1,5 +1,6 @@
 package org.hillel.service;
 
+import org.hillel.dto.dto.JourneyDto;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.exceptions.UnableToRemove;
 import org.hillel.persistence.entity.*;
@@ -30,6 +31,19 @@ public class TicketClient {
         return vehicleService.findAll();
     }
 
+    @Autowired
+    public void  setJouneyService(JourneyService journeyService){
+        this.journeyService = journeyService;
+    }
+
+    public JourneyEntity findJourneyById(Long id) {
+     return   journeyService.findById(id);
+    }
+//    public List<JourneyEntity> findJourneysByParam(){
+//        List<JourneyEntity> result = new ArrayList<>();
+//
+//    }
+/*
     public List<JourneyEntity> find(final String stationFrom, final String stationTo, final LocalDate date) {
 
         List<JourneyEntity> resultList = new ArrayList<>();
@@ -40,7 +54,7 @@ public class TicketClient {
         Set<Long> toRoutes = stationService.getConnectedRoutesIds(stationTo);
 
 
-        Set<Long> intersection = new HashSet<>(fromRoutes);
+       Set<Long> intersection = new HashSet<>(fromRoutes);
         if (intersection.retainAll(toRoutes)) {
             try {
                 from = stationService.findOneByName(stationFrom);
@@ -62,11 +76,8 @@ public class TicketClient {
                 resultList.add(new JourneyEntity(route, from, to, date));
             }
         }
-        //to do
-        //find or if it necessary create correspondent Trip with received date
         return resultList;
-
-    }
+    }*/
 
     /**
      * user
@@ -255,6 +266,15 @@ public class TicketClient {
 
     public Long countStations() {
         return stationService.count();
+    }
+
+    public List<JourneyDto> findJourneys(JourneyDto journeyDto) {
+        List<JourneyDto> result = journeyService.findRelevant(journeyDto);
+        return result;
+    }
+
+    public Long getIdByName(String stationName) {
+        return stationService.findOneByName(stationName).getId();
     }
 
     public Page<StationEntity> getFilteredPagedStations(QueryParam param) {

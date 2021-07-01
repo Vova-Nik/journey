@@ -75,6 +75,10 @@ public class TripEntity extends AbstractEntity<Long> {
         return departure.plusSeconds(secAfterMidnight);
     }
 
+    public Instant getArrival() {
+        return getDeparture().plusSeconds(route.getDuration());
+    }
+
     @Override
     public boolean isValid() {
         return super.isValid() && route != null && route.isValid();
@@ -87,6 +91,10 @@ public class TripEntity extends AbstractEntity<Long> {
         TripEntity that = (TripEntity) o;
         return route.equals(that.route) &&
                 departureDate.equals(that.departureDate);
+    }
+
+    public String getDescription(){
+        return route.getStationFrom() + " -> " + route.getStationTo();
     }
 
     @Override

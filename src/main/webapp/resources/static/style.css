@@ -308,3 +308,8 @@ body {
 .user_role_password>div{
     margin: 0 10px 0 0;
 }
+
+.common_text{
+    padding: .5vw 4%;
+    line-height: 1.6em;
+}

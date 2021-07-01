@@ -34,7 +34,7 @@ public class Application implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext restAppContext = new AnnotationConfigWebApplicationContext();
         restAppContext.register(RestConfig.class);
         ServletRegistration.Dynamic restServlet = servletContext.addServlet("apiServlet", new DispatcherServlet(restAppContext));
-        restServlet.addMapping("/api", "/api/*");
+        restServlet.addMapping("/api", "/api/*", "/api/**");
 
         CharacterEncodingFilter cef = new CharacterEncodingFilter();
         cef.setEncoding("UTF-8");
