@@ -19,6 +19,8 @@ import org.springframework.data.domain.Page;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,15 +92,37 @@ class TripServiceTest {
         protos.add(new ProtoTrip("211", "Oriental Express"));
         protos.add(new ProtoTrip("221", "Oriental Express"));
         protos.add(new ProtoTrip("222", "Oriental Express"));
+        int ofset = 7;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        //formatter = formatter.withLocale( putAppropriateLocaleHere );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
+        LocalDate date = LocalDate.parse("2021-07-05", formatter);
+        int num = 7;
+        System.out.println(date);
 
         protos.forEach(proto -> {
             route = routeService.findOneByName(proto.getRouteName());
             vehicle = vehicleService.findOneByName(proto.getVehicleName());
-            for (int i = 0; i < 8; i++) {
-                trip = new TripEntity(route, vehicle, LocalDate.now().plusDays(i));
-                    tripService.saveAnyWay(trip);
+            for (int i = 0; i < num; i++) {
+                trip = new TripEntity(route, vehicle, date.plusDays(i));
+                tripService.saveAnyWay(trip);
             }
         });
+    }
+
+    @Test
+    void getIn() {
+        List<Long> ids = new ArrayList<>();
+        ids.add(15L);
+        ids.add(16L);
+
+        List<TripEntity> trips = tripService.getIn(ids);
+        System.out.println("Trips Size = " + trips.size());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse("2021-07-05", formatter);
+        List<TripEntity> tripsD = tripService.getByRouteAndDate(ids, date);
+        System.out.println("Trips Size = " + tripsD.size());
     }
 
     /*
@@ -167,7 +191,7 @@ class TripServiceTest {
         List<TripEntity> trips = tripService.findAll();
         Instant today = Instant.now();
         for (TripEntity trip : trips) {
-            if(today.isBefore(trip.getDeparture())) {
+            if (today.isBefore(trip.getDeparture())) {
                 num = (int) (Math.random() * (100 + 1));
                 trip.sellTicket(num);
                 tripService.save(trip);

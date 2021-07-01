@@ -44,7 +44,7 @@ public class AuthController {
     }
 }
 /*
-
+http://localhost:8080/api/swagger-ui.html
     {
       "email": "admin@ttt.ua",
       "password": "123"

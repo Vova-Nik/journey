@@ -53,23 +53,23 @@ public class StationService extends EntityServiceImplementation<StationEntity, L
     }
 
     @Transactional(readOnly = true)
-    public Set<Long> getConnectedRoutesIds(Long id){
-        StationEntity st = stationRepository.findById(id).orElseThrow(()->new IllegalArgumentException("StationService.getConnectedRoutesIds bad Id"));
+    public Set<Long> getConnectedRoutesIds(Long id) {
+        StationEntity st = stationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("StationService.getConnectedRoutesIds bad Id"));
         return st.getConnectedRoutesIds();
     }
 
     @Transactional(readOnly = true)
-    public Set<Long> getConnectedRoutesIds(String name){
+    public Set<Long> getConnectedRoutesIds(String name) {
         StationEntity st = stationRepository.findByName(name).get(0);
         return st.getConnectedRoutesIds();
     }
 
     @Transactional(readOnly = true)
-    public Set<RouteEntity> getConnectedRoutes(Long id){
-        StationEntity st = stationRepository.findById(id).orElseThrow(()->new IllegalArgumentException("StationService.getConnectedRoutes bad Id"));
+    public Set<RouteEntity> getConnectedRoutes(Long id) {
+        StationEntity st = stationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("StationService.getConnectedRoutes bad Id"));
         Set<RouteEntity> routes = new HashSet<>();
-        Set<Long> routeIds =  st.getConnectedRoutesIds();
-        routeIds.forEach(routeId-> routes.add(routeRepository.findById(routeId).orElseThrow(()->new IllegalArgumentException("StationService.getConnectedRoutes bad Id"))));
+        Set<Long> routeIds = st.getConnectedRoutesIds();
+        routeIds.forEach(routeId -> routes.add(routeRepository.findById(routeId).orElseThrow(() -> new IllegalArgumentException("StationService.getConnectedRoutes bad Id"))));
         return routes;
     }
 
@@ -82,7 +82,29 @@ public class StationService extends EntityServiceImplementation<StationEntity, L
             RouteEntity route = routeRepository.findById(routeId).orElseThrow(() -> new UnableToRemove("StationService.deleteById"));
             route.removeStation(station);
         }
-            stationRepository.deleteById(id);
+        stationRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Long> getPairByNames(final String stationFrom, final String stationTo) {
+        if (Objects.isNull(stationFrom) || Objects.isNull(stationTo))
+            throw new IllegalArgumentException("StationService.getPairByNames not valid args");
+        List<StationEntity> stationList = stationRepository.findPairByName(stationFrom, stationTo);
+        StationEntity station = stationList.get(0);
+        Map<String, Long> result = new HashMap<>();
+        if(station.getName().equals(stationFrom)){
+            result.put("stationFrom",station.getId());
+        }else{
+            result.put("stationTo",station.getId());
+        }
+        station = stationList.get(1);
+        if(station.getName().equals(stationFrom)){
+            result.put("stationFrom",station.getId());
+        }else{
+            result.put("stationTo",station.getId());
+        }
+        if(result.size()<2)  throw new IllegalArgumentException("StationService.getPairByNames unable to find both stations");
+        return result;
     }
 
     @Override
@@ -117,7 +139,7 @@ public class StationService extends EntityServiceImplementation<StationEntity, L
         if (column.equals("id"))
             checked = true;
         if (!checked)
-            throw new IllegalArgumentException("Insufficient column name = \""+ column + "\" for sorting of Station");
+            throw new IllegalArgumentException("Insufficient column name = \"" + column + "\" for sorting of Station");
         return param;
     }
 

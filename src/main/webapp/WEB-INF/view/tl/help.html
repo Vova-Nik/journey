@@ -11,14 +11,14 @@
     <div th:replace="/general.html :: menu"></div>
     <div th:replace="/general.html :: header"></div>
 
+<!--    <div class="help_page menu_item"><a href="http://localhost:8080/api/swagger-ui.html">Swagger</a></div>-->
     <div class="help_page header">Swagger</div>
-    <div class="help_page menu_item">
-        <a th:href="@{/api/swagger-ui.html}">Swagger reff</a>
-        <p>{<br>
-            "email": "admin@ttt.ua",<br>
-            "password": "123"<br>
-            }<br>
-        </p>
+    <div class="help_page menu_item"><a href="http://vovanik.ddns.net/journey/api/swagger-ui.html">http://vovanik.ddns.net/journey/api/swagger-ui.html</a></div>
+    <div class="common_text"> To obtain token use:</div>
+    <div class="common_text">{<br>
+    "email": "admin@ttt.ua",<br>
+    "password": "123"<br>
+    }<br>
     </div>
 
     <div class="help_page header">Possible get params</div>
@@ -28,13 +28,13 @@
         <li>sortColumn = "id", "name", ... entity specific</li>
         <li class="help_page li">sortDirection = "asc", "desc"</li>
         <li class="help_page li">filterField = "id", "name", ... entity specific</li>
-        <li class="help_page li">filterValue = "*", ... entity specific;</li>
+        <li class="help_page li">filterValue = "*", ... tntity specific;</li>
         <li class="help_page li">filterOperation = GREATER, LESS, NOT_EQUALS, EQUALS, LIKE</li>
         <li class="help_page li">pageNumber = decimal</li>
         <li class="help_page li">pageSize = decimal (DEFAULT_PAGE_SIZE =8)</li>
         </ul>
     </div>
-    <div class="help_page text">Внимание!. В рамках одной сущности не заданные в запросе параметры могут оставаться от предыдущих запросов.</div>
+    <div class="help_page text">Внимание!. В рамках одной сущности не заданные в запросе параметры могут оставаться от предыдущих хапросов.</div>
     <div class="help_page text">Нумерация страниц в get с нуля, в view с единицы.</div>
 
     <div class="help_page header">Users get request examples</div>

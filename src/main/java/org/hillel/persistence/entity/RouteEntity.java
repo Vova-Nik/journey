@@ -29,7 +29,7 @@ public class RouteEntity extends AbstractEntity<Long> {
     @Column(name = "departure_time", nullable = false)
     private Time departureTime;
     @Column(name = "duration", nullable = false)
-    private Long duration;
+    private Long duration; //seconds
     @Column(name = "arrival_time", nullable = false)
     private Time arrivalTime;
     @Enumerated(EnumType.STRING)
@@ -94,13 +94,22 @@ public class RouteEntity extends AbstractEntity<Long> {
         return false;
     }
 
+    public boolean containsStationById(final Long id) {
+        if (Objects.isNull(id))
+            throw new IllegalArgumentException("RouteEntity.containsStationById id not valid");
+        for (StationEntity station : stations) {
+            assert station.getId() != null;
+            if (station.getId().equals(id)) return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean isValid() {
         if (!super.isValid()) return false;
         if (stationFrom == null) return false;
         if (departureTime == null) return false;
-        if (type == null) return false;
-        return true;
+        return type != null;
     }
 
     public List<StationEntity> getStations() {

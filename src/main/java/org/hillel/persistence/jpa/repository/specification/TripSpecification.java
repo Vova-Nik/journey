@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.criteria.*;
 import java.time.LocalDate;
+import java.util.List;
 
 public class TripSpecification {
 
@@ -23,6 +24,17 @@ public class TripSpecification {
     public static Specification<TripEntity> findByDate(final LocalDate date) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(TripEntity_.DEPARTURE_DATE), date);
+    }
+
+    public static Specification<TripEntity> routesIn(final List<Long> routes) {
+        return (root, query, criteriaBuilder) ->{
+            if (routes != null && !routes.isEmpty()) {
+                return root.get(TripEntity_.ROUTE).in(routes);
+            } else {
+                // always-true predicate, means that no filtering would be applied
+                return criteriaBuilder.and();
+            }
+        };
     }
 
     public static Specification<TripEntity> findByName(final String name) {

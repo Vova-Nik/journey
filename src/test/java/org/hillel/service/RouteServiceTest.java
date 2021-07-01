@@ -45,14 +45,14 @@ class RouteServiceTest {
         StationEntity ternopil = stationService.findOneByName("Ternopil");
         RouteEntity routeEntity = null;
 
-        routeEntity = routeService.findById(31L);
-        routeEntity.addStation(ternopil);
-
-        routeEntity = routeService.findById(32L);
-        routeEntity.addStation(ternopil);
+        routeEntity = routeService.findOneByName("31");
+        routeEntity.addStation(vapnyarka);
+        routeService.save(routeEntity);
 
 
-
+        routeEntity = routeService.findOneByName("32");
+        routeEntity.addStation(vapnyarka);
+        routeService.save(routeEntity);
 
 
 /*

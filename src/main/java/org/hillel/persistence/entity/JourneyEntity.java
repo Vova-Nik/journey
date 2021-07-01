@@ -23,11 +23,13 @@ public class JourneyEntity extends AbstractEntity<Long> {
     @Column(name="name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private StationEntity stationFrom;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private StationEntity stationTo;
 
@@ -37,23 +39,24 @@ public class JourneyEntity extends AbstractEntity<Long> {
     @Column(name = "arrival", nullable = false)
     private Instant arrival;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private RouteEntity route;
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    private TripEntity trip;
 
-    public JourneyEntity(final RouteEntity route, final StationEntity stationFrom, final StationEntity stationTo, final LocalDate date) {
-        if(Objects.isNull(route) || !route.isValid()) throw new IllegalArgumentException("JourneyEntity.constructor route not valid");
-        if(Objects.isNull(stationFrom) || !route.isValid()) throw new IllegalArgumentException("JourneyEntity.constructor stationFrom not valid");
-        if(Objects.isNull(stationTo) || !route.isValid()) throw new IllegalArgumentException("JourneyEntity.constructor stationTo not valid");
+    public JourneyEntity(final TripEntity trip, final StationEntity stationFrom, final StationEntity stationTo, final LocalDate date) {
+        if(Objects.isNull(trip) || !trip.isValid()) throw new IllegalArgumentException("JourneyEntity.constructor route not valid");
+        if(Objects.isNull(stationFrom) || !trip.isValid()) throw new IllegalArgumentException("JourneyEntity.constructor stationFrom not valid");
+        if(Objects.isNull(stationTo) || !trip.isValid()) throw new IllegalArgumentException("JourneyEntity.constructor stationTo not valid");
 
         this.name = stationFrom.getName() + "->" + stationTo.getName();
         this.stationFrom = stationFrom;
         this.stationTo = stationTo;
-        this.route = route;
-        Time departureTime = route.getDepartureTime();
+        this.trip = trip;
+        Time departureTime = trip.getRoute().getDepartureTime();
         long secAfterMidnight = departureTime.getHours()*3600 + departureTime.getMinutes()*60;
         departure = date.atStartOfDay(ZoneId.of("GMT")).toInstant();
         departure = departure.plusSeconds(secAfterMidnight);
-        this.arrival = departure.plusSeconds(route.getDuration());
+        this.arrival = departure.plusSeconds(trip.getRoute().getDuration());
     }
 
     @Override
@@ -68,12 +71,12 @@ public class JourneyEntity extends AbstractEntity<Long> {
         JourneyEntity that = (JourneyEntity) o;
         return stationFrom.equals(that.stationFrom) &&
                 stationTo.equals(that.stationTo) &&
-                route.equals(that.route);
+                trip.equals(that.trip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stationFrom, stationTo, route);
+        return Objects.hash(stationFrom, stationTo, trip);
     }
 
     @Override
@@ -82,6 +85,7 @@ public class JourneyEntity extends AbstractEntity<Long> {
                 "name='" + name + '\'' +
                 ", departure=" + departure +
                 ", arrival=" + arrival +
+                ", trip=" + trip +
                 '}';
     }
 }
