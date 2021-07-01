@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head th:fragment="headerFragment">
-    <title>Ticket</title>
+<head>
     <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <link rel="shortcut icon" th:href="@{/resources/static/favicon.ico}" type="image/x-icon">
     <meta charset="UTF-8">
+    <title>Journey</title>
 </head>
 
 <body>
 <div class="container">
-    <div class="head">
-        <div class="head-logo"></div>
-        <div class="head-text">
-            РАСПИСАНИЕ
-        </div>
-    </div>
+    <div th:replace="/general.html :: menu"></div>
+    <div th:replace="/general.html :: header"></div>
 
     <div class="pageInfo" th:text="${pageInfo}"></div>
 
@@ -33,10 +29,11 @@
             <div class="client_view_column" th:text="${entity.email}"></div>
             <div class="client_view_column" th:text="${entity.pwd}"></div>
         </div>
+
     <h3>Тут будет список поездок когда либо купленный данным персоном</h3>
 
-    <div class=footer"  th:insert="~{footer :: copy}"></div>
+    <div class="footer" th:replace="/general.html :: footer"></div>
 </div>
-https://habr.com/ru/post/351844/
+
 </body>
 </html>

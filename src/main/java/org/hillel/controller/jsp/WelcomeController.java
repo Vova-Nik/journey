@@ -12,7 +12,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.time.LocalTime;
 import java.util.Objects;
 
 @Controller
@@ -21,13 +20,17 @@ public class WelcomeController {
     @Autowired
     ServletContext servletContext;
 
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    public String welcomePage(HttpServletRequest request, HttpServletResponse response, Model model){
-        request.setAttribute("thetime", LocalTime.now().toString());
-        model.addAttribute("vvv","vvvvvvvvvvvvvvvv");
-        return "welcome";
+//    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+//    public String welcomePage(){
+//        return "index";
+//    }
+
+    @RequestMapping(value = "/rest", method = RequestMethod.GET)
+    public String restPage(HttpServletRequest request, HttpServletResponse response, Model model){
+        return "rest";
     }
 
+/*
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public void getImageAsByteArray(HttpServletResponse response) throws IOException {
         InputStream in = servletContext.getResourceAsStream("/WEB-INF/img/1.jpg");
@@ -42,11 +45,9 @@ public class WelcomeController {
         BufferedOutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 
-        //        response.setContentType("text/plain");
-        //        response.setHeader("Content-disposition", "attachment; 1.jpg");
-
         IOUtils.copy(inputStream, outputStream);
         IOUtils.close(inputStream);
         IOUtils.close(outputStream);
     }
+    */
 }

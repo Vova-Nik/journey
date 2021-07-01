@@ -1,18 +1,15 @@
 package org.hillel.service;
 
 import org.hillel.config.RootConfig;
+import org.hillel.dto.dto.QueryParam;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
-import org.hillel.persistence.entity.enums.StationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
-
-import java.sql.Time;
-
+import org.springframework.data.domain.Page;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouteServiceTest {
@@ -108,5 +105,14 @@ class RouteServiceTest {
         routeEntity2 = routeService.save(routeEntity2);
    */
 //        routeService.deleteAll();
+    }
+
+    @Test
+    void anull(){
+        QueryParam param =null;
+        Page<RouteEntity> page;
+        page = routeService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+        assertEquals(8, page.getSize());
     }
 }

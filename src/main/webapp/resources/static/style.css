@@ -12,9 +12,31 @@ body {
     margin: 0 auto;
 }
 
-/* *********************************************************** */
+/********************** main menu *************************/
+.main_menu{
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap:  wrap;
+}
+
+.menu_item{
+    margin: 5px 20px;
+    line-height: 24px;
+}
+
+.menu_item a {
+    text-decoration: none;
+    color: rgb(69, 192, 21);
+    cursor: pointer;
+}
+
+.menu_item a:hover {
+    color: yellow;
+}
+
+/* ************************* header ********************************** */
 .pageInfo {
-    font-size: 32px;
+    font-size: 24px;
     margin: 50px 10%;
 }
 
@@ -25,16 +47,21 @@ body {
 
 .head {
     display: flex;
+    /*position: relative;*/
 }
 
 .head-logo {
+    /*position: absolute;*/
+    /*top: -48px;*/
     height: 256px;
     width: 400px;
-    background-image: url("https://i.fbcd.co/products/resized/resized-750-500/429b2ed047fdfaf8825ce2cdf48ccb522c5ac0c0ceb79ad999046ae075717ff9.jpg");
+    background-image: url("journey.jpg");
     background-size: cover;
 }
 
 .head-text {
+    /*position: relative;*/
+    /*left: 600px;*/
     padding-left: 10%;
     line-height: 200px;
     font-size: xx-large;
@@ -42,31 +69,75 @@ body {
     height: 256px;
 }
 
-a {
-    text-decoration: none;
-    color: yellow;
-}
-
-a:hover {
-    color: #faf7ed;
-    font-weight: bold;
-}
-
 .button {
     text-align: center;
     /*border: 2px solid blue;*/
     cursor: pointer;
 }
-.footer{
-    font-size: x-small;
-    margin: 200px auto;
+
+
+/* ******************* footer ********************** */
+
+.footer {
+    display: flex;
+    width: 50%;
+    margin: 5vh auto;
 }
-/* ************************************************* */
+.footer_left{
+    width: 50%;
+    font-size: x-small;
+}
+.footer_reffs {
+    text-decoration: none;
+    color: yellow;
+}
+
+.footer_about {
+    width: 50%;
+    font-size: x-small;
+    text-align: right;
+}
+
+/* ******************* table ********************** */
+
+.table_ref {
+    text-decoration: none;
+    color: yellow;
+}
+
+.table_ref:hover {
+    color: #faf7ed;
+}
+
+/* ****************** paging  ***************** */
+
+.pagination {
+    width: 60%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.pagination_block {
+    width: 30%;
+    text-align: center;
+}
+
+.pagination_ref {
+    text-decoration: none;
+    color: yellow;
+}
+
+.pagination_ref:hover {
+    color: #faf7ed;
+}
+
+/* ****************** common_view ***************** */
 
 .list {
     display: flex;
     flex-direction: row;
-    /*margin: 0 10px;*/
+    line-height: 24px;
     width: 100%;
 }
 
@@ -100,6 +171,7 @@ a:hover {
 .npp {
     width: 48px;
 }
+
 
 /****************** client_view ************************/
 
@@ -149,6 +221,7 @@ a:hover {
 .station_view_info {
     width: calc(50% - 48px);
     color: #bdbd39;
+    font-size: x-small;
 }
 
 .station_view_routes {
@@ -156,9 +229,11 @@ a:hover {
     color: #2ed90f;
     width: 100%;
 }
-.station_view_route{
+
+.station_view_route {
     margin: 5px 10px 5px 10%;
 }
+
 /****************** route ************************/
 
 .route_view_id {
@@ -177,6 +252,7 @@ a:hover {
 .route_view_info {
     width: calc(50% - 48px);
     color: #bdbd39;
+    font-size: x-small;
 }
 
 .route_view_stations {
@@ -185,6 +261,50 @@ a:hover {
     color: #2ed90f;
     width: 100%;
 }
-.route_view_station{
+
+.route_view_station {
     margin: 10px 10px 5px 10%;
+}
+
+/***************** Help page *******************/
+.help_page.header{
+    color: #e2e2ae;
+    font-size: medium;
+    margin: 5vh 0 1vh 10px;
+}
+
+.help_page.menu_item{
+    color: yellow;
+    font-size: small;
+    margin-left: 3%;
+}
+
+.help_text{
+    color: #ecec95;
+    margin-left: 5%;
+    font-size: small;
+}
+
+.help_page.list{
+    color: #eeeed9;
+    font-size: small;
+}
+
+.help_page.li{
+    font-size: small;
+    line-height: 2em;
+}
+.help_page.text{
+    color: tomato;
+}
+
+.user_role_password{
+    font-size: smaller;
+    margin: 10px auto 10px 70%;
+    width: 29%;
+    display: flex;
+}
+
+.user_role_password>div{
+    margin: 0 10px 0 0;
 }

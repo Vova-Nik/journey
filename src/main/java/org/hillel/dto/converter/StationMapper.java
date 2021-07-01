@@ -3,7 +3,6 @@ package org.hillel.dto.converter;
 import org.hillel.dto.dto.StationDto;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

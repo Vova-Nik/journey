@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
-    <link rel="stylesheet" th:href="@{/resources/static/reset.css}"/>
+    <link rel="shortcut icon" th:href="@{/resources/static/favicon.ico}" type="image/x-icon">
     <meta charset="UTF-8">
-    <title>Station</title>
+    <title>Journey</title>
 </head>
 <body>
 <div class="container">
-    <div class="head">
-        <div class="head-logo"></div>
-        <div class="head-text">
-            РАСПИСАНИЕ
-        </div>
-    </div>
+    <div th:replace="/general.html :: menu"></div>
+    <div th:replace="/general.html :: header"></div>
     <div class="pageInfo" th:text="${pageInfo}"></div>
 
     <div class="list vehicle_view_header">
@@ -41,7 +36,7 @@
         <div th:text="${route}"></div>
     </div>
     </div>
-    <div class="fff">Bye</div>
+    <div class="footer" th:replace="/general.html :: footer"></div>
 </div>
 </body>
 </html>

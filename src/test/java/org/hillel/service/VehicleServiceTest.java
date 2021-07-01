@@ -1,26 +1,24 @@
 package org.hillel.service;
 
 import org.hillel.config.RootConfig;
+import org.hillel.dto.dto.QueryParam;
 import org.hillel.persistence.entity.VehicleEntity;
-import org.hillel.persistence.entity.enums.VehicleType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
-
+import org.springframework.data.domain.Page;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VehicleServiceTest {
-
 
     static ConfigurableApplicationContext applicationContext;
     static Environment env;
     static StationService stationService;
     static RouteService routeService;
     static VehicleService vehicleService;
-    static JourneyService journeyService;
-    static ClientService clientService;
+    static UserService clientService;
 
     @BeforeAll
     public static void setUp() {
@@ -29,9 +27,8 @@ class VehicleServiceTest {
         vehicleService = applicationContext.getBean(VehicleService.class);
         stationService = applicationContext.getBean(org.hillel.service.StationService.class);
         routeService = applicationContext.getBean(RouteService.class);
-        clientService = applicationContext.getBean(ClientService.class);
+        clientService = applicationContext.getBean(UserService.class);
     }
-
 
     @Test
     void initVehicles() {
@@ -50,6 +47,15 @@ class VehicleServiceTest {
         vehicleEntity = new VehicleEntity("Kashtan", VehicleType.TRAIN);
         vehicleService.save(vehicleEntity);*/
 
+    }
+
+    @Test
+    void anull(){
+        QueryParam param =null;
+        Page<VehicleEntity> page;
+        page = vehicleService.getFilteredPaged(param);
+        page.forEach(System.out::println);
+        assertEquals(8, page.getSize());
     }
 
 }

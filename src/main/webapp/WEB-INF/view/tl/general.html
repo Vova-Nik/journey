@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <title>Journey</title>
+</head>
+<body>
+    <div class="main_menu" th:fragment="menu">
+<!--        <div class="menu_item"><a th:href="@{/tl/index}">Home</a></div>-->
+        <div class="menu_item"><a th:href="@{/tl/users}">Users</a></div>
+        <div class="menu_item"><a th:href="@{/tl/vehicles}">Транспортные средства</a> </div>
+        <div class="menu_item"><a th:href="@{/tl/stations}">Станции</a></div>
+        <div class="menu_item"><a th:href="@{/tl/routes}">Маршруты</a></div>
+        <div class="menu_item"><a th:href="@{/tl/trips}">Рейсы</a></div>
+        <div class="menu_item"><a th:href="@{/rest}"> Rest API</a></div>
+        <div class="menu_item"><a th:href="@{/tl/help}">Help!</a></div>
+    </div>
+
+    <div class="head" th:fragment="header">
+    <a th:href="@{/tl/index}"><div class="head-logo"></div></a>
+        <div class="head-text">
+            JOURNE-Y
+        </div>
+</div>
+
+<footer class="footer" th:fragment="footer">
+    <div class="footer_left">
+
+    </div>
+    <div class ="footer_about">
+        Journey. By V.Nikolenko (mail-to vmaseich@gmail.com) <a class="footer_reffs" href="https://odessa.ithillel.ua/">Hillel</a> Odessa 2021
+    </div>
+
+</footer>
+</body>
+</html>

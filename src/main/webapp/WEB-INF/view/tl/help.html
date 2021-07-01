@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/resources/static/style.css}"/>
+    <link rel="shortcut icon" th:href="@{/resources/static/favicon.ico}" type="image/x-icon">
+    <meta charset="UTF-8">
+    <title>Journey</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="/general.html :: menu"></div>
+    <div th:replace="/general.html :: header"></div>
+
+    <div class="help_page header">Swagger</div>
+    <div class="help_page menu_item">
+        <a th:href="@{/api/swagger-ui.html}">Swagger reff</a>
+        <p>{<br>
+            "email": "admin@ttt.ua",<br>
+            "password": "123"<br>
+            }<br>
+        </p>
+    </div>
+
+    <div class="help_page header">Possible get params</div>
+    <div class="help_page help_text">
+
+        <ul class="help_page ul">
+        <li>sortColumn = "id", "name", ... entity specific</li>
+        <li class="help_page li">sortDirection = "asc", "desc"</li>
+        <li class="help_page li">filterField = "id", "name", ... entity specific</li>
+        <li class="help_page li">filterValue = "*", ... entity specific;</li>
+        <li class="help_page li">filterOperation = GREATER, LESS, NOT_EQUALS, EQUALS, LIKE</li>
+        <li class="help_page li">pageNumber = decimal</li>
+        <li class="help_page li">pageSize = decimal (DEFAULT_PAGE_SIZE =8)</li>
+        </ul>
+    </div>
+    <div class="help_page text">Внимание!. В рамках одной сущности не заданные в запросе параметры могут оставаться от предыдущих запросов.</div>
+    <div class="help_page text">Нумерация страниц в get с нуля, в view с единицы.</div>
+
+    <div class="help_page header">Users get request examples</div>
+    <div class="help_page menu_item"><a
+            th:href="@{/tl/users?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=20}">//tl/users?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageSize=6&sortColumn=name&sortDirection=desc}">//tl/users?pageSize=6&sortColumn=name&sortDirection=desc</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageSize=16&sortColumn=id&pageNumber=1}">//tl/users?pageSize=16&sortColumn=id&pageNumber=1</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageNumber=2}">/tl/clients?pageNumber=2</a></div>
+    <div class="help_page menu_item"><a th:href="@{/tl/users?pageNumber=0&filterField=name&filterValue=Bob&filterOperation=LIKE}">//tl/users?pageNumber=0&filterField=name&filterValue=Bob&filterOperation=LIKE</a></div>
+
+
+    <div class="help_page header">Vehicles get request examples</div>
+    <div class="help_page menu_item"><a
+            th:href="@{/tl/vehicles?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3}">//tl/vehicles?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/vehicles?pageSize=6&sortColumn=name&sortDirection=desc}">//tl/vehicles?pageSize=6&sortColumn=name&sortDirection=desc</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/vehicles?pageSize=6&sortColumn=id&pageNumber=1}">//tl/vehicles?pageSize=6&sortColumn=id&pageNumber=1</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/vehicles?pageNumber=2}">//tl/vehicles?pageNumber=2</a></div>
+
+    <div class="help_page header">Routes get request examples</div>
+    <div class="help_page menu_item"><a
+            th:href="@{/tl/routes?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3}">//tl/routes?sortColumn=id&sortDirection=desc&pageNumber=0&pageSize=3</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/routes?pageSize=6&sortColumn=name&sortDirection=desc}">//tl/routes?pageSize=6&sortColumn=name&sortDirection=desc</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/routes?pageSize=6&sortColumn=id&pageNumber=1}">//tl/routes?pageSize=6&sortColumn=id&pageNumber=1&sortDirection=asc</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/routes?pageNumber=0&filterField=stationFrom&filterValue=Odessa&filterOperation=LIKE}">//tl/routes?pageNumber=0&filterField=stationFrom&filterValue=Odessa&filterOperation=LIKE</a></div>
+
+
+    <div class="help_page header">Trips get request examples</div>
+
+    <div class="help_page menu_item"><a th:href="@{/tl/trips?pageNumber=0&filterField=name&filterValue=42&filterOperation=Like}">//tl/trips?pageNumber=0&filterField=name&filterValue=42&filterOperation=Like</a>
+    </div>
+    <div class="help_page menu_item"><a th:href="@{/tl/trips?pageNumber=0&sortColumn=sold&sortDirection=asc&pageSize=24&filterField=id&filterValue=*}">//tl/trips?pageNumber=0&sortColumn=sold&sortDirection=asc&pageSize=24&filterField=id&filterValue=*</a></div>
+
+
+    <div class="footer" th:replace="/general.html :: footer"></div>
+</div>
+</body>
+</html>
