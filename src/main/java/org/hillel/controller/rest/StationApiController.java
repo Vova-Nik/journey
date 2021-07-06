@@ -41,7 +41,7 @@ public class StationApiController {
         List<StationDto> dtos = stations.stream()
                 .map(mapper::stationToStationDto)
                 .collect(Collectors.toList());
-        System.out.println(dtos.get(0));
+//        System.out.println(dtos.get(0));
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 

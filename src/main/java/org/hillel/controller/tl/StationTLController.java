@@ -100,10 +100,10 @@ public class StationTLController {
         ModelAndView mav = new ModelAndView("station_view");
         mav.addObject("pageInfo", pageInfo);
         mav.addObject("entity", dto);
-        Set<RouteEntity> routes = ticketClient.getConnectedRoutes(id);
-        List<String> routeDtos = new ArrayList<>();
-        routes.forEach(route -> routeDtos.add(routeMapper.routeToRouteDto(route).toString()));
-        mav.addObject("routes", routeDtos);
+//        Set<RouteEntity> routes = ticketClient.getConnectedRoutes(id);
+//        List<String> routeDtos = new ArrayList<>();
+//        routes.forEach(route -> routeDtos.add(routeMapper.routeToRouteDto(route).toString()));
+//        mav.addObject("routes", routeDtos);
         return mav;
     }
 

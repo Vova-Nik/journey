@@ -79,10 +79,10 @@ public class TripTlController {
                     responseRow[0] = dto.getId().toString();
                     responseRow[1] = dto.getName();
                     responseRow[2] = String.valueOf(dto.getDepartureDate());
-                    responseRow[3] = String.valueOf(dto.getRoute().getDepartureTime());
+                    responseRow[3] = String.valueOf(dto.getDepartureTime());
                     responseRow[4] = String.valueOf(dto.getTickets());
                     responseRow[5] = String.valueOf(dto.getFreePlaces());
-                    responseRow[6] = String.valueOf(dto.getRoute().getStationFrom() + " -> " + dto.getRoute().getStationTo());
+                    responseRow[6] = String.valueOf(dto.getRouteName());
                     responseRow[7] = String.valueOf(dto.getVehicle().getVehicleType() +" - " + dto.getVehicle().getName());
                     return responseRow;
                 })
@@ -105,12 +105,12 @@ public class TripTlController {
         mav.addObject("arrival", dto.getArrival());
         mav.addObject("tickets", String.valueOf(dto.getTickets()));
         mav.addObject("places", String.valueOf(dto.getFreePlaces()));
-        mav.addObject("route", String.valueOf(dto.getRoute().getStationFrom() + " -> " + dto.getRoute().getStationTo()));
+        mav.addObject("route", String.valueOf(dto.getRouteName()));
         mav.addObject("vehicle", String.valueOf(dto.getVehicle().getVehicleType() +" - " + dto.getVehicle().getName()));
 
-        List<StationEntity> stations = ticketClient.getRouteStations(entity.getRoute().getId());
+//        List<StationEntity> stations = ticketClient.getRouteStations(entity.getRoute().getId());
         List<String> stationDtos = new ArrayList<>();
-        stations.forEach(station -> stationDtos.add(stationMapper.stationToStationDto(station).toString()));
+//        stations.forEach(station -> stationDtos.add(stationMapper.stationToStationDto(station).toString()));
         mav.addObject("stations", stationDtos);
         return mav;
     }

@@ -18,22 +18,19 @@ public class RouteMapper {
         }
 
         RouteDto routeDto = new RouteDto();
-
+        routeDto.setDescription( route.getDescription());
         routeDto.setId( route.getId() );
         routeDto.setName( route.getName() );
-        routeDto.setStationFrom( route.getStationFrom() );
-        routeDto.setStationTo( route.getStationTo() );
+        routeDto.setStationFrom( route.getStationFrom().getName() );
+        routeDto.setStationTo( route.getStationTo().getName() );
         routeDto.setDeparturePeriod( route.getDeparturePeriod() );
+
         routeDto.setDepartureTime( route.getDepartureTime() );
         if ( route.getDuration() != null ) {
             routeDto.setDuration( route.getDuration() );
         }
         routeDto.setArrivalTime( route.getArrivalTime() );
         routeDto.setType( route.getType() );
-        List<StationEntity> list = route.getStations();
-        if ( list != null ) {
-            routeDto.setStations( new HashSet<StationEntity>( list ) );
-        }
 
         return routeDto;
     }
@@ -48,17 +45,17 @@ public class RouteMapper {
 
         routeEntity.setId( route.getId() );
         routeEntity.setName( route.getName() );
-        routeEntity.setStationFrom( route.getStationFrom() );
-        routeEntity.setStationTo( route.getStationTo() );
+//        routeEntity.setStationFrom( route.getStationFrom() );
+//        routeEntity.setStationTo( route.getStationTo() );
         routeEntity.setDeparturePeriod( route.getDeparturePeriod() );
         routeEntity.setDepartureTime( route.getDepartureTime() );
         routeEntity.setDuration( route.getDuration() );
         routeEntity.setArrivalTime( route.getArrivalTime() );
         routeEntity.setType( route.getType() );
-        Set<StationEntity> set = route.getStations();
-        if ( set != null ) {
-            routeEntity.setStations( new HashSet<StationEntity>( set ) );
-        }
+//        Set<StationEntity> set = route.getStations();
+//        if ( set != null ) {
+//            routeEntity.setStations( new HashSet<StationEntity>( set ) );
+//        }
 
         return routeEntity;
     }

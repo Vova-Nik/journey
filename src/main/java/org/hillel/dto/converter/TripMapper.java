@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Time;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 
 @Component
@@ -19,20 +21,21 @@ public class TripMapper {
         tripDto.setId( trip.getId() );
         tripDto.setName( trip.getName() );
         tripDto.setVehicle( trip.getVehicle() );
-        tripDto.setRoute( trip.getRoute() );
+//        tripDto.setRoute( trip.getRoute() );
+        tripDto.setRouteName(trip.getRoute().getName());
         tripDto.setTickets( trip.getTickets() );
         tripDto.setSold( trip.getSold() );
         tripDto.setDepartureDate( trip.getDepartureDate() );
         tripDto.setFreePlaces(trip.getTickets()-trip.getSold());
         tripDto.setDeparture(trip.getDepartureDate() + " " + trip.getRoute().getDepartureTime());
 
-        Instant arr = trip.getDepartureDate().atStartOfDay(ZoneId.systemDefault()).toInstant();
-        Time departureTime = trip.getRoute().getDepartureTime();
-        int secsDeparture = departureTime.getHours()*3600 + departureTime.getMinutes()*60;
-        arr = arr.plusSeconds(trip.getRoute().getDuration());
-        arr = arr.plusSeconds(secsDeparture);
-        String arrival = arr.toString().replace('T',' ');
-        arrival = arrival.replace('Z',' ');
+        Instant depart = trip.getDepartureDate().atStartOfDay(ZoneId.systemDefault()).toInstant();
+        int secsDeparture = trip.getRoute().getDepartureTime().toSecondOfDay();
+        depart = depart.plusSeconds(secsDeparture);
+        String departure = depart.toString().replace('T',' ').replace('Z', ' ');
+        tripDto.setDeparture(departure);
+        Instant arriv = depart.plusSeconds(trip.getRoute().getDuration());
+        String arrival = arriv.toString().replace('T',' ').replace('Z', ' ');
         tripDto.setArrival(arrival);
         return tripDto;
     }

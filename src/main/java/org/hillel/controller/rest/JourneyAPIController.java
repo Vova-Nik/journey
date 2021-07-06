@@ -61,7 +61,10 @@ public class JourneyAPIController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    @ApiOperation(value = "find journeys by date, station from, station to", tags = "journeys")
+    @ApiOperation(value = "find journeys by date, station from, station to" +
+            "{     \"departure\": \"2021-07-02\",\n" +
+            "      \"stationFrom\": \"Odessa\",\n" +
+            "      \"stationTo\": \"Kyiv\"}", tags = "journeys")
     @ResponseBody
     public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestBody JourneyDto journeyDto) {
 //    public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestParam JourneyDto journeyDto) {
@@ -84,18 +87,9 @@ public class JourneyAPIController {
 /*
 http://localhost:8080/api/swagger-ui.html
 [
-{
-      "arrival": "string",
-      "departure": "2021-07-02",
-      "id": 0,
-      "name": "string",
-      "routeDescript": "string",
-      "routeName": "string",
+{     "departure": "2021-07-02",
       "stationFrom": "Odessa",
-      "stationTo": "Kyiv",
-      "vehicleName": "string",
-      "vehicleType": "string"
-}
+      "stationTo": "Kyiv"}
 ]
 
         */

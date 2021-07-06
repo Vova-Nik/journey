@@ -31,12 +31,11 @@ public class JourneyDto {
         this.stationFrom = stationFrom;
         this.stationTo = stationTo;
         this.name = route.getName();
-        departure = route.toString();
+        departure = trip.getDeparture().toString();
         arrival = trip.getArrival().toString();
         routeName = route.getName();
         routeDescript = trip.getDescription();
         vehicleType = trip.getVehicle().getVehicleType().toString();
         vehicleName = trip.getVehicle().getName();
     }
-
 }

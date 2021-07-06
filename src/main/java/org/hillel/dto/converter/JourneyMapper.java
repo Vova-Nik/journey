@@ -15,8 +15,12 @@ public class JourneyMapper {
         JourneyDto journeyDto = new JourneyDto();
         journeyDto.setId( journeyEntity.getId() );
         journeyDto.setName( journeyEntity.getName() );
-        journeyDto.setStationFrom( journeyEntity.getStationFrom().getName() );
-        journeyDto.setStationTo( journeyEntity.getStationTo().getName() );
+//        journeyDto.setStationFrom( journeyEntity.getStationFrom().getName() );
+        journeyDto.setStationFrom( journeyEntity.getStationFrom());
+
+//        journeyDto.setStationTo( journeyEntity.getStationTo().getName() );
+        journeyDto.setStationTo( journeyEntity.getStationTo());
+
         journeyDto.setDeparture( journeyEntity.getDeparture().toString() );
         journeyDto.setArrival( journeyEntity.getArrival().toString() );
 

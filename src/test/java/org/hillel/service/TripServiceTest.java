@@ -96,7 +96,7 @@ class TripServiceTest {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //formatter = formatter.withLocale( putAppropriateLocaleHere );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
-        LocalDate date = LocalDate.parse("2021-07-05", formatter);
+        LocalDate date = LocalDate.parse("2021-07-19", formatter);
         int num = 7;
         System.out.println(date);
 

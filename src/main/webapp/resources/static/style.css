@@ -313,3 +313,11 @@ body {
     padding: .5vw 4%;
     line-height: 1.6em;
 }
+
+.swagger{
+    float: right;
+    margin-right: 10%;
+}
+.clearfix{
+    clear: both;
+}

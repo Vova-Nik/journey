@@ -36,9 +36,9 @@ public class TicketClient {
         this.journeyService = journeyService;
     }
 
-    public JourneyEntity findJourneyById(Long id) {
-     return   journeyService.findById(id);
-    }
+//    public JourneyEntity findJourneyById(Long id) {
+//     return   journeyService.findById(id);
+//    }
 //    public List<JourneyEntity> findJourneysByParam(){
 //        List<JourneyEntity> result = new ArrayList<>();
 //
@@ -176,24 +176,24 @@ public class TicketClient {
     /**
      * Journey
      */
-    @Autowired
-    public void setJourneyService(JourneyService service) {
-        if (Objects.isNull(service))
-            throw new IllegalArgumentException("Can not create ticket user bean,  journey Service is empty");
-        this.journeyService = service;
-    }
+//    @Autowired
+//    public void setJourneyService(JourneyService service) {
+//        if (Objects.isNull(service))
+//            throw new IllegalArgumentException("Can not create ticket user bean,  journey Service is empty");
+//        this.journeyService = service;
+//    }
 
-    public void createJourney(JourneyEntity entity) {
-        journeyService.save(entity);
-    }
+//    public void createJourney(JourneyEntity entity) {
+//        journeyService.save(entity);
+//    }
 
-    public JourneyEntity getJourneyById(Long id) {
-        return journeyService.findById(id);
-    }
+//    public JourneyEntity getJourneyById(Long id) {
+//        return journeyService.findById(id);
+//    }
 
-    public List<JourneyEntity> getAllJourneys() {
-        return journeyService.findAllCtive();
-    }
+//    public List<JourneyEntity> getAllJourneys() {
+//        return journeyService.findAllCtive();
+//    }
 
 
     /**
@@ -218,9 +218,9 @@ public class TicketClient {
         return routeService.findAllCtive();
     }
 
-    public List<StationEntity> getRouteStations(Long id) {
-        return routeService.getStationsOnRoute(id);
-    }
+//    public List<StationEntity> getRouteStations(Long id) {
+//        return routeService.getStationsOnRoute(id);
+//    }
 
     public List<RouteEntity> getAllRoutesByPage(int page, int size, String sort) {
         return routeService.findActiveSortedByPage(page, size, sort);
@@ -256,9 +256,9 @@ public class TicketClient {
         return stationService.findAllCtive();
     }
 
-    public Set<RouteEntity> getConnectedRoutes(Long id) {
-        return stationService.getConnectedRoutes(id);
-    }
+//    public Set<RouteEntity> getConnectedRoutes(Long id) {
+//        return stationService.getConnectedRoutes(id);
+//    }
 
     public List<StationEntity> getAllStationsByPage(int page, int size, String sort) {
         return stationService.findActiveSortedByPage(page, size, sort);

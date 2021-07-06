@@ -14,4 +14,6 @@ public interface TripJPARepository extends CommonRepository<TripEntity,Long>, Jp
 
     @Query("select t from TripEntity t inner join RouteEntity r on t.route = r.id where r.id=:routeId and t.departureDate=:date and t.active = true ")
     List<TripEntity> findByRouteAndDateActive(@Param("routeId") Long routeId, @Param("date") LocalDate departure);
+
+
 }

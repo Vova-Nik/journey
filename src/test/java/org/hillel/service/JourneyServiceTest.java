@@ -36,15 +36,15 @@ public class JourneyServiceTest {
         journeyService = applicationContext.getBean(JourneyService.class);
     }
 
-    @Test
-    public void create(){
-        TripEntity trip = tripService.findById(27l);
-        StationEntity  stationFrom = stationService.findOneByName("Odessa");
-        StationEntity  stationTo = stationService.findOneByName("Kyiv");
-        JourneyEntity journey = new JourneyEntity(trip, stationFrom, stationTo, trip.getDepartureDate());
-        System.out.println(journey);
-        JourneyEntity jr = journeyService.save(journey);
-    }
+//    @Test
+//    public void create(){
+//        TripEntity trip = tripService.findById(27l);
+//        StationEntity  stationFrom = stationService.findOneByName("Odessa");
+//        StationEntity  stationTo = stationService.findOneByName("Kyiv");
+//        JourneyEntity journey = new JourneyEntity(trip, stationFrom, stationTo, trip.getDepartureDate());
+//        System.out.println(journey);
+//        JourneyEntity jr = journeyService.save(journey);
+//    }
 
     @Test
     public void findRelevant() {

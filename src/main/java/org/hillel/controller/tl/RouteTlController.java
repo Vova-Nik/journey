@@ -97,9 +97,9 @@ public class RouteTlController {
         ModelAndView mav = new ModelAndView("route_view");
         mav.addObject("pageInfo", pageInfo);
         mav.addObject("entity", dto);
-        List<StationEntity> stations = ticketClient.getRouteStations(id);
+//        List<StationEntity> stations = ticketClient.getRouteStations(id);
         List<String> stationDtos = new ArrayList<>();
-        stations.forEach(station -> stationDtos.add(stationMapper.stationToStationDto(station).toString()));
+//        stations.forEach(station -> stationDtos.add(stationMapper.stationToStationDto(station).toString()));
         mav.addObject("stations", stationDtos);
         return mav;
     }

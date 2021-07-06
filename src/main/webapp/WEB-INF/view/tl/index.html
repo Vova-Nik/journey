@@ -10,9 +10,11 @@
 <div class="container">
     <div th:replace="/general.html :: menu"></div>
     <div th:replace="/general.html :: header"></div>
-    <div class="user_role_password"> <div>dilan@gmail.com</div> - ROLE_ADMIN  123</div>
-    <div class="user_role_password"> <div>gilmour@gmail.com</div> - ROLE_TICKET 123</div>
-    <div class="user_role_password"> <div>admin@ttt.ua</div> - ROLE_ADMIN, ROLE_TICKET 123</div>
+    <div class="menu_item swagger">
+        <h2>Swagger</h2>
+        <a th:href="@{/api/swagger-ui.html}">http://vovanik.ddns.net/journey/api/swagger-ui.html</a>
+    </div>
+    <div class="clearfix"></div>
     <div class="footer" th:replace="/general.html :: footer"></div>
 </div>
 </body>

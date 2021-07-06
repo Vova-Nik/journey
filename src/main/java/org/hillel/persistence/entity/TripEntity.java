@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Objects;
 /*Route realization wich has Date of departure
@@ -18,9 +19,10 @@ Creating  when first ticket to this rout sold
 @Getter
 @NoArgsConstructor
 @Table(
-        name = "trip",
-        uniqueConstraints =
-        @UniqueConstraint(columnNames = {"route", "departure"})
+        name = "trip"
+        ,
+        uniqueConstraints = @UniqueConstraint(columnNames = {"route", "departure"}
+        )
 )
 
 public class TripEntity extends AbstractEntity<Long> {
@@ -69,8 +71,8 @@ public class TripEntity extends AbstractEntity<Long> {
     }
 
     public Instant getDeparture() {
-        Time departureTime = route.getDepartureTime();
-        long secAfterMidnight = departureTime.getHours() * 3600 + departureTime.getMinutes() * 60;
+        LocalTime departureTime = route.getDepartureTime();
+        long secAfterMidnight = departureTime.getHour() * 3600 + departureTime.getMinute() * 60;
         Instant departure = departureDate.atStartOfDay(ZoneId.of("GMT")).toInstant();
         return departure.plusSeconds(secAfterMidnight);
     }

@@ -9,6 +9,7 @@ import org.hillel.persistence.jpa.repository.specification.TripSpecification;
 import org.hillel.persistence.jpa.repository.specification.VehicleSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -52,8 +53,9 @@ public class TripService extends EntityServiceImplementation<TripEntity, Long> {
             throw new IllegalArgumentException("TripService TripEntity.create is not valid");
         try {
             result = tripRepository.save(trip);
-        } catch (DataIntegrityViolationException | ConstraintViolationException ignored){
-
+        } catch (DataIntegrityViolationException | ConstraintViolationException e){
+//        } catch (Exception ignored){
+            System.out.println("ignored " + trip);
         }
         return result;
     }
