@@ -2,6 +2,7 @@ package org.hillel.service;
 
 
 import net.bytebuddy.agent.builder.AgentBuilder;
+import org.hillel.persistence.entity.AbstractEntity;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
 import org.hillel.persistence.entity.StopEntity;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("StopService")
 public class StopService extends EntityServiceImplementation<StopEntity, Long> {
@@ -74,6 +76,22 @@ public class StopService extends EntityServiceImplementation<StopEntity, Long> {
         List<StopEntity> stops = new ArrayList<>(stopJPARepository.findAllByRoute(route));
         Collections.sort(stops);
         return stops;
+    }
+
+    @Transactional
+    public Set<RouteEntity> findAllRoutesByStation(final StationEntity stationEntity) {
+        Set<StopEntity> stops = stopJPARepository.findStopsByStation(stationEntity);
+        Set<Long> routeIds = stops.stream()
+                .map(stop -> stop.getRoute().getId())
+                .collect(Collectors.toSet());
+        Set<RouteEntity> routes = routeJPARepository.findByIds(routeIds);
+        return routes;
+    }
+
+    @Transactional
+    public Set<StopEntity> findAllByStation(final StationEntity stationEntity) {
+//        Set<StopEntity> stops = stopJPARepository.findStopsByStation(stationEntity);
+        return stopJPARepository.findStopsByStation(stationEntity);
     }
 
     @Override

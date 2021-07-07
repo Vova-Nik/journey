@@ -2,10 +2,12 @@ package org.hillel.controller.tl;
 
 import org.hillel.dto.converter.RouteMapper;
 import org.hillel.dto.converter.StationMapper;
+import org.hillel.dto.converter.StopMapper;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.dto.dto.StationDto;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
+import org.hillel.persistence.entity.StopEntity;
 import org.hillel.persistence.entity.VehicleEntity;
 import org.hillel.service.TicketClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +29,17 @@ import java.util.stream.Collectors;
 @Controller
 public class StationTLController {
     private final TicketClient ticketClient;
-    private final StationMapper mapper;
-    private final RouteMapper routeMapper;
+    private final StationMapper stationMapper;
+    private final StopMapper stopMapper;
     private final int TABLE_SIZE = 6;
     private final QueryParam queryParam;
     private String rootUrl;
 
     @Autowired
-    public StationTLController(TicketClient ticketClient, StationMapper mapper, RouteMapper routeMapper) {
+    public StationTLController(TicketClient ticketClient, StationMapper stationMapper, StopMapper stopMapper) {
         this.ticketClient = ticketClient;
-        this.mapper = mapper;
-        this.routeMapper = routeMapper;
+        this.stationMapper = stationMapper;
+        this.stopMapper = stopMapper;
         queryParam = new QueryParam();
     }
 
@@ -64,7 +66,6 @@ public class StationTLController {
         model.addAttribute("pager", (queryParam.getPageNumber() + 1) + " / " + totalPges);
 
         rootUrl = request.getRequestURL().toString();
-
         model.addAttribute("url", "station/");
         model.addAttribute("title", "Stations");
         model.addAttribute("pageInfo", "Станции");
@@ -74,7 +75,7 @@ public class StationTLController {
 
         Page<StationEntity> allEntities = ticketClient.getFilteredPagedStations(queryParam);
         List<String[]> allEntitiesDto = allEntities.stream()
-                .map(mapper::stationToStationDto)
+                .map(stationMapper::stationToStationDto)
                 .map(dto -> {
                     String[] responseRow = new String[TABLE_SIZE];
                     responseRow[0] = dto.getId().toString();
@@ -94,16 +95,18 @@ public class StationTLController {
     public ModelAndView showById(Model model, @PathVariable("id") Long id) {
 
         StationEntity entity = ticketClient.getStationById(id);
-        StationDto dto = mapper.stationToStationDto(entity);
+        StationDto dto = stationMapper.stationToStationDto(entity);
 
         String pageInfo = "Станция id = " + id;
         ModelAndView mav = new ModelAndView("station_view");
         mav.addObject("pageInfo", pageInfo);
         mav.addObject("entity", dto);
-//        Set<RouteEntity> routes = ticketClient.getConnectedRoutes(id);
-//        List<String> routeDtos = new ArrayList<>();
-//        routes.forEach(route -> routeDtos.add(routeMapper.routeToRouteDto(route).toString()));
-//        mav.addObject("routes", routeDtos);
+
+        Set<StopEntity> stops = ticketClient.getAllStopsByStation(entity);
+//        Set<RouteEntity> routes = ticketClient.getConnectedRoutes(entity);
+        List<String> stopDtos = new ArrayList<>();
+        stops.forEach(stop -> stopDtos.add(stopMapper.stopToStopDto(stop).show()));
+        mav.addObject("stops", stopDtos);
         return mav;
     }
 

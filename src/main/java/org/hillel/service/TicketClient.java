@@ -23,6 +23,7 @@ public class TicketClient {
     private StationService stationService;
     private TripService tripService;
     private VehicleService vehicleService;
+    private StopService stopService;
 
     public TicketClient() {
     }
@@ -256,9 +257,9 @@ public class TicketClient {
         return stationService.findAllCtive();
     }
 
-//    public Set<RouteEntity> getConnectedRoutes(Long id) {
-//        return stationService.getConnectedRoutes(id);
-//    }
+    public Set<RouteEntity> getConnectedRoutes(StationEntity station) {
+         return stopService.findAllRoutesByStation(station);
+    }
 
     public List<StationEntity> getAllStationsByPage(int page, int size, String sort) {
         return stationService.findActiveSortedByPage(page, size, sort);
@@ -348,6 +349,20 @@ public class TicketClient {
     public Page<VehicleEntity> getFilteredPagedVehicles(QueryParam param) {
         return vehicleService.getFilteredPaged(param);
     }
+
+    /* stop */
+
+    @Autowired
+    public void setStopService(StopService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create ticket client bean,  stop Service is empty");
+        this.stopService = service;
+    }
+
+    public Set<StopEntity> getAllStopsByStation(StationEntity station){
+        return stopService.findAllByStation(station);
+    }
+
 }
 
 

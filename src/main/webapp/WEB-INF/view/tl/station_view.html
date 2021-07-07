@@ -32,8 +32,8 @@
         <div class="station_view_info" th:text="${entity.description}"></div>
     </div>
     <div class="station_view_routes">
-    <div class="station_view_route" th:each="route, iterator: ${routes}">
-        <div th:text="${route}"></div>
+    <div class="station_view_route" th:each="stop, iterator: ${stops}">
+        <div th:text="${stop}"></div>
     </div>
     </div>
     <div class="footer" th:replace="/general.html :: footer"></div>

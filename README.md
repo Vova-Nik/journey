@@ -9,5 +9,5 @@ Spring Security
 Postgress DB  
 MVC  
 REST  
-Swagger based front end in progress  
+Svelte based frontend in progress  
 Project could be seen at http://vovanik.ddns.net/journey/tl/index
