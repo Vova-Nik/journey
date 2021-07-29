@@ -38,7 +38,7 @@ public class UserApiController {
 
     /* *************************************** get all *********************************************/
     @GetMapping(
-            path = "/users",
+            path = "/user",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ApiOperation(value = "get all users", tags = "users")
@@ -60,12 +60,12 @@ public class UserApiController {
 
     @CrossOrigin
     @GetMapping(
-            path = "/user",
+            path = "/user/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ResponseBody
     @ApiOperation(value = "get one user by user (id is mandatory)", tags = "users")
-    public ResponseEntity<UserDto> getUser(HttpServletRequest request, @RequestParam("id") Long id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id) {
         UserDto userDto = null;
         if (id == null || id < 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDto);
@@ -77,7 +77,7 @@ public class UserApiController {
 
     /* *************************************** create *********************************************/
     @PostMapping(
-            path = "/create",
+            path = "/user",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
@@ -99,7 +99,7 @@ public class UserApiController {
 
     /* *************************************** update *********************************************/
 
-    @PostMapping(
+    @PutMapping(
             path = "/update",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
@@ -118,7 +118,6 @@ public class UserApiController {
         return ResponseEntity.status(HttpStatus.CONFLICT).header("Unable to delete incorrect user passed").build();
     }
     /* *************************************** delete *********************************************/
-
     @DeleteMapping(
             path = "/delete",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},

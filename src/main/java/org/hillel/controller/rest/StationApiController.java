@@ -10,14 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-
 @RequestMapping("/station")
+
 public class StationApiController {
 
     private final TicketClient ticketClient;
@@ -31,18 +31,28 @@ public class StationApiController {
 
     /* *************************************** get all *********************************************/
     @GetMapping(
-            path = "/stations",
+            path = "/station",
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    @ApiOperation(value = "get all stations", tags = "stations")
-    @ResponseBody
+    @ApiOperation(value = "get all stations", tags = "station")
     public ResponseEntity<List<StationDto>> stations() {
         List<StationEntity> stations = ticketClient.getAllStations();
         List<StationDto> dtos = stations.stream()
                 .map(mapper::stationToStationDto)
                 .collect(Collectors.toList());
-//        System.out.println(dtos.get(0));
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
+    /* ***************************** get by id *********************/
+    @GetMapping(
+            path = "/station/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @ApiOperation(value = "get exception min  station controller", tags = "station")
+    public ResponseEntity<StationDto> getException(@PathVariable final Long id) {
+        StationEntity station = ticketClient.getStationById(id);
+        StationDto stdto = mapper.stationToStationDto(station);
+        return ResponseEntity.status(HttpStatus.OK).body(stdto);
     }
 
 }

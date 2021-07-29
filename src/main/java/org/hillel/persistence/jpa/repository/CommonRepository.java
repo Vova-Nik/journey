@@ -9,6 +9,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @NoRepositoryBean
 public interface CommonRepository<E extends Persistable<ID>, ID extends Serializable> extends JpaRepository<E, Long> {
@@ -41,5 +42,8 @@ public interface CommonRepository<E extends Persistable<ID>, ID extends Serializ
 
     @Query("select e from #{#entityName} e where e.active = true ")
     List<E> findActiveSortedByPage(Pageable page);
+
+    @Query("select e from #{#entityName} e where e.id in :ids")
+    Set<E> findByIds(@Param("ids")Set<Long> ids);
 
 }
