@@ -40,16 +40,14 @@ public class JourneyAPIController {
 
     /* *************************************** test *********************************************/
     @GetMapping(
-            path = "/test",
+            path = "/journey",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ApiOperation(value = "just return journey", tags = "journeys")
-    @ResponseBody
     public ResponseEntity<List<JourneyDto>> test() {
         List<JourneyDto> dtos = new ArrayList<>();
         TripEntity trip = ticketClient.getTripById(1L);
         JourneyDto dto = new JourneyDto(trip, "Odessa", "Kyiv");
-
         dtos.add(dto);
         dtos.add(dto);
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
@@ -57,7 +55,7 @@ public class JourneyAPIController {
 
     /* *************************************** get all *********************************************/
     @PostMapping(
-            path = "/find",
+            path = "/journey",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
@@ -65,9 +63,8 @@ public class JourneyAPIController {
             "{     \"departure\": \"2021-07-02\",\n" +
             "      \"stationFrom\": \"Odessa\",\n" +
             "      \"stationTo\": \"Kyiv\"}", tags = "journeys")
-    @ResponseBody
+
     public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestBody JourneyDto journeyDto) {
-//    public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestParam JourneyDto journeyDto) {
         if (StringUtils.isEmpty(journeyDto.getStationFrom()) || StringUtils.isEmpty(journeyDto.getStationTo())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -83,13 +80,16 @@ public class JourneyAPIController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
+
+
 //http://localhost:8080/journey/api/swagger-ui.html
 /*
 http://localhost:8080/api/swagger-ui.html
-[
+
 {     "departure": "2021-07-02",
       "stationFrom": "Odessa",
-      "stationTo": "Kyiv"}
-]
+      "stationTo": "Kyiv"
+      }
+
 
         */

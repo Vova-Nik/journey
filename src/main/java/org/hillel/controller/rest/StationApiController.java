@@ -54,5 +54,4 @@ public class StationApiController {
         StationDto stdto = mapper.stationToStationDto(station);
         return ResponseEntity.status(HttpStatus.OK).body(stdto);
     }
-
 }

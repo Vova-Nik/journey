@@ -1,6 +1,7 @@
 package org.hillel.service;
 
 import org.hillel.dto.dto.QueryParam;
+import org.hillel.exceptions.UserAPIException;
 import org.hillel.persistence.entity.UserEntity;
 import org.hillel.persistence.jpa.repository.UserJPARepository;
 import org.hillel.persistence.jpa.repository.specification.ClientSpecification;
@@ -52,7 +53,7 @@ public class UserService extends EntityServiceImplementation<UserEntity, Long> {
         if(user.getId()==null || !user.isValid()){
             return new UserEntity();
         }
-        UserEntity userEntityToDelete = userRepository.findById(user.getId()).orElseThrow(() ->new IllegalArgumentException("UserService.remove can not find user" + user));
+        UserEntity userEntityToDelete = userRepository.findById(user.getId()).orElseThrow(() ->new UserAPIException("UserService.remove can not find user" + user));
         if(!userEntityToDelete.equals(user)){
             return new UserEntity();
         }
@@ -93,7 +94,7 @@ public class UserService extends EntityServiceImplementation<UserEntity, Long> {
     @Transactional(readOnly = true)
     public UserEntity getByEmail(String email) {
         if (StringUtils.isEmpty(email)){
-            throw new IllegalArgumentException("UserService.getByEmail - can not find  " + email);
+            throw new UserAPIException("UserService.getByEmail - can not find  " + email);
         }
         List<UserEntity> users = userRepository.findByEmail(email);
         return users.get(0);
@@ -105,7 +106,7 @@ public class UserService extends EntityServiceImplementation<UserEntity, Long> {
         try{
             userEntity = super.findById(id);
         }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
+            throw new UserAPIException("UserService.getById - can not find user having id = " + id);
         }
         return  userEntity;
     }
@@ -115,7 +116,7 @@ public class UserService extends EntityServiceImplementation<UserEntity, Long> {
         if(user.getId()==null || !user.isValid()){
             return new UserEntity();
         }
-        UserEntity userEntityOld = userRepository.findById(user.getId()).orElseThrow(() ->new IllegalArgumentException("UserService.remove can not find user" + user));
+        UserEntity userEntityOld = userRepository.findById(user.getId()).orElseThrow(() ->new UserAPIException("UserService.remove can not find user" + user));
         System.out.println(userEntityOld);
 //        userEntityOld.setName(user.getName());
 //        userEntityOld.setSurname(user.getSurname());
@@ -144,7 +145,7 @@ public class UserService extends EntityServiceImplementation<UserEntity, Long> {
         if (column.equals("id"))
             checked = true;
         if (!checked)
-            throw new IllegalArgumentException("Insufficient column name = \""+ column + "\" for sorting of Client");
+            throw new UserAPIException("Insufficient column name = \""+ column + "\" for sorting of Client");
         return param;
     }
 }

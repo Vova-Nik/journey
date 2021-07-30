@@ -92,31 +92,18 @@ public class TicketClient {
 
     public UserEntity createUser(UserEntity entity) {
         UserEntity userEntity = null;
-        try {
             userEntity = userService.create(entity);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
         return userEntity;
     }
 
     public UserEntity getUserById(Long id) {
-        UserEntity userEntity = null;
-        try {
-            userEntity = userService.findById(id);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        UserEntity userEntity = userService.findById(id);
         return userEntity;
     }
 
     public List<UserEntity> getAllUsers() {
         List<UserEntity> users = new ArrayList<>();
-        try {
             users = userService.findAllCtive();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
         return users;
     }
 
@@ -125,52 +112,28 @@ public class TicketClient {
     }
 
     public Long countUsers() {
-        long count = 0;
-        try {
-            count = userService.count();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+           Long count = userService.count();
         return count;
     }
 
     public boolean existsByEmail(String email) {
         boolean result = false;
-        try {
             result = userService.existsByEmail(email);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
         return result;
     }
 
     public UserEntity getByEmail(String email) {
-        UserEntity userEntity = null;
-        try {
-            userEntity = userService.getByEmail(email);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        UserEntity userEntity = userService.getByEmail(email);
         return userEntity;
     }
 
     public UserEntity updateUser(UserEntity entity) {
-        UserEntity userEntity = null;
-        try {
-            userEntity = userService.update(entity);
-        } catch (IllegalArgumentException  e) {
-            System.out.println(e.getMessage());
-        }
+        UserEntity userEntity = userService.update(entity);
         return userEntity;
     }
 
     public UserEntity deleteUser(UserEntity entity) {
-        UserEntity userEntity = null;
-        try {
-            userEntity = userService.remove(entity);
-        } catch (IllegalArgumentException  e) {
-            System.out.println(e.getMessage());
-        }
+            UserEntity  userEntity = userService.remove(entity);
         return userEntity;
     }
 

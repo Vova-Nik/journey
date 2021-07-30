@@ -42,7 +42,6 @@ public class UserApiController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ApiOperation(value = "get all users", tags = "users")
-    @ResponseBody
     public ResponseEntity<List<UserDto>> users() {
         if (ticketClient.countUsers() > 1000) {
             //todo redirection to paged user service
@@ -63,7 +62,6 @@ public class UserApiController {
             path = "/user/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    @ResponseBody
     @ApiOperation(value = "get one user by user (id is mandatory)", tags = "users")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id) {
         UserDto userDto = null;
@@ -82,7 +80,7 @@ public class UserApiController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ApiOperation(value = "create user", tags = "users")
-    @ResponseBody
+//    @ResponseBody
     public ResponseEntity<UserDto> persistClient(@RequestBody UserDto userDto) {
         UserEntity userEntity = mapper.userDtoToEntity(userDto);
         System.out.println(userDto);
@@ -100,11 +98,10 @@ public class UserApiController {
     /* *************************************** update *********************************************/
 
     @PutMapping(
-            path = "/update",
+            path = "/user",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    @ResponseBody
     @ApiOperation(value = "update", tags = "users")
     public ResponseEntity<UserDto> updateClient(@RequestBody UserDto userDto) {
         UserEntity userEntity = mapper.userDtoToEntity(userDto);
@@ -119,14 +116,13 @@ public class UserApiController {
     }
     /* *************************************** delete *********************************************/
     @DeleteMapping(
-            path = "/delete",
+            path = "/user",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
 
 //    @Secured("ROLE_ADMIN")
     @ApiOperation(value = "delete user", tags = "users")
-    @ResponseBody
     public ResponseEntity<UserDto> deleteClient(@RequestBody UserDto userDto) {
         UserEntity userEntity = mapper.userDtoToEntity(userDto);
         if (userEntity.isValid()) {

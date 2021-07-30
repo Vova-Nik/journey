@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
     let statBtn = document.querySelector(".stat-btn");
     let downloadBtn = document.querySelector(".download-btn");
 
-    // update();
     let content = document.querySelector(".content");
 
     let edId = document.querySelector(".client_form > .client_id");
@@ -26,14 +25,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
     //let pathRoot = prompt('pathRoot?',"http://localhost/api/user/" );
     // Request URL: http://vovanik.ddns.net/journey/api/user/users
 
-
         let clientPatern = {
         id: -1,
         name: "John",
         surname: "Johnson",
         email: "johnson@mail.com",
         pwd: "123",
-
     }
 
     clientsShow();
@@ -41,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     /* ************************* clientShow all *************************************/
     async function clientsShow() {
-        let response = await fetch(pathRoot + 'users', {
+        let response = await fetch(pathRoot + 'user', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
@@ -84,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 table.addEventListener("click", clientClicked);
                 row_container.append(table);
             }
-
 
         } else {
             alert("HTTP error: " + response.status);
@@ -252,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
         let param = new URLSearchParams({ id: id, });
 
-        let response = await fetch(pathRoot + 'user/?' + param, {
+        let response = await fetch(pathRoot + 'user/' + param, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
@@ -275,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     /* ************************* clientCreate *************************************/
     async function clientCreate(client) {
         // console.log("In client create. Client = ", client)
-        let response = await fetch(pathRoot + 'create', {
+        let response = await fetch(pathRoot + 'user', {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
@@ -300,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     /* ************************* clientDelete *************************************/
     async function clientDelete(client) {
         // console.log("In client create. Client = ", client)
-        let response = await fetch(pathRoot + 'delete', {
+        let response = await fetch(pathRoot + 'user', {
             method: 'DELETE',
             headers: {
                 'accept': 'application/json',
@@ -326,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     /* ************************* clientUdate *************************************/
     async function clientUdate(client) {
         // console.log("In client create. Client = ", client)
-        let response = await fetch(pathRoot + 'update', {
+        let response = await fetch(pathRoot + 'user', {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
