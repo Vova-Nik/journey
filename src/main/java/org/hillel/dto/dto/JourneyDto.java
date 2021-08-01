@@ -19,23 +19,43 @@ public class JourneyDto {
     private String name;
     private String stationFrom;
     private String stationTo;
-    private String departure;
-    private String arrival;
+    private String departureDate;
+    private String arrivalDate;
+    private String departureTime;
+    private String arrivalTime;
     private String routeName;
     private String routeDescript;
     private String vehicleType;
     private String vehicleName;
 
     public JourneyDto(TripEntity trip, String stationFrom, String stationTo) {
-        RouteEntity route = trip.getRoute();
+//        RouteEntity route = trip.getRoute();
         this.stationFrom = stationFrom;
         this.stationTo = stationTo;
-        this.name = route.getName();
-        departure = trip.getDeparture().toString();
-        arrival = trip.getArrival().toString();
-        routeName = route.getName();
-        routeDescript = trip.getDescription();
-        vehicleType = trip.getVehicle().getVehicleType().toString();
-        vehicleName = trip.getVehicle().getName();
+        this.departureDate = trip.getDepartureDate().toString();
+
+//        this.name = route.getName();
+//        this.routeName = route.getName();
+//        this.routeDescript = trip.getDescription();
+//        this.vehicleType = trip.getVehicle().getVehicleType().toString();
+//        this.vehicleName = trip.getVehicle().getName();
+//        this.departureDate = trip.getDepartureDate().toString();
+
+    }
+
+    @Override
+    public String toString() {
+        return "JourneyDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", stationFrom='" + stationFrom + '\'' +
+                ", stationTo='" + stationTo + '\'' +
+                ", departure='" + departureDate + " - " + departureTime +'\'' +
+                ", arrival='" + arrivalDate + " - " + arrivalTime + '\'' +
+                ", routeName='" + routeName + '\'' +
+                ", routeDescription='" + routeDescript + '\'' +
+                ", vehicleType='" + vehicleType + '\'' +
+                ", vehicleName='" + vehicleName + '\'' +
+                '}';
     }
 }

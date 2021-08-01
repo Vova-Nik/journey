@@ -23,6 +23,7 @@ public class JourneyServiceTest {
     static JourneyService journeyService;
     static UserService userService;
     static TripService tripService;
+    static StopService stopService;
 
     @BeforeAll
     public static void setUp() {
@@ -34,6 +35,7 @@ public class JourneyServiceTest {
         userService = applicationContext.getBean(UserService.class);
         tripService = applicationContext.getBean(TripService.class);
         journeyService = applicationContext.getBean(JourneyService.class);
+        stopService = applicationContext.getBean(StopService.class);
     }
 
 //    @Test
@@ -47,23 +49,25 @@ public class JourneyServiceTest {
 //    }
 
     @Test
-    public void findRelevant() {
+    public void findJ() {
         JourneyDto journeyDto = new JourneyDto();
-        journeyDto.setStationFrom("Gmerinka");
+        journeyDto.setStationFrom("Zhmerynka");
         journeyDto.setStationTo("Kyiv");
-        journeyDto.setDeparture("2021-07-05");
+        journeyDto.setDepartureDate("2021-07-19");
 
-//        private String stationFrom;
-//        private String stationTo;
-//        private String departure;
+        List<JourneyDto> results = journeyService.findJourneys(journeyDto);
+//        List<Long> l = stopService.findRouteByStops("Zhmerynka", "Kyiv");
+        results.forEach(System.out::println);
 
-//        JourneyDto journeyDto = JourneyDto.builder()
-//                .stationFrom("Odessa")
-//                .stationTo("Kyiv")
-//                .build();
-        List<JourneyDto> result = journeyService.findRelevant(journeyDto);
-        System.out.println(result);
+
     }
 
 }
-   //public JourneyEntity(final TripEntity trip, final StationEntity stationFrom, final StationEntity stationTo, final LocalDate date) {
+
+/*
+  {
+      "departureDate": "2021-07-19",
+      "stationFrom": "Zhmerynka",
+      "stationTo": "Kyiv",
+  }
+*/

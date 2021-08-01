@@ -21,8 +21,8 @@ public class JourneyMapper {
 //        journeyDto.setStationTo( journeyEntity.getStationTo().getName() );
         journeyDto.setStationTo( journeyEntity.getStationTo());
 
-        journeyDto.setDeparture( journeyEntity.getDeparture().toString() );
-        journeyDto.setArrival( journeyEntity.getArrival().toString() );
+        journeyDto.setDepartureDate( journeyEntity.getDeparture().toString() );
+        journeyDto.setArrivalDate( journeyEntity.getArrival().toString() );
 
         TripEntity trip = journeyEntity.getTrip();
         RouteEntity route = trip.getRoute();

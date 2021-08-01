@@ -1,5 +1,6 @@
 package org.hillel.persistence.jpa.repository;
 
+import org.hillel.persistence.entity.StopEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,5 +46,7 @@ public interface CommonRepository<E extends Persistable<ID>, ID extends Serializ
 
     @Query("select e from #{#entityName} e where e.id in :ids")
     Set<E> findByIds(@Param("ids")Set<Long> ids);
+
+
 
 }

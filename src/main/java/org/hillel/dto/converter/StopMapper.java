@@ -23,7 +23,7 @@ public class StopMapper {
         stopDto.setRouteId(stopEntity.getRoute().getId());
         stopDto.setRouteDescription(stopEntity.getRoute().getDescription());
         stopDto.setArrival(stopEntity.getArrival());
-        stopDto.setDuration(stopEntity.getDuration());
+        stopDto.setDuration(stopEntity.getStaying());
         stopDto.setDeparture(stopEntity.getDeparture());
         stopDto.setDescription(stopEntity.getDescription());
         stopDto.setDayOffset(stopEntity.getDayOffset());

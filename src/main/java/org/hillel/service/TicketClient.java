@@ -140,12 +140,16 @@ public class TicketClient {
     /**
      * Journey
      */
-//    @Autowired
-//    public void setJourneyService(JourneyService service) {
-//        if (Objects.isNull(service))
-//            throw new IllegalArgumentException("Can not create ticket user bean,  journey Service is empty");
-//        this.journeyService = service;
-//    }
+    @Autowired
+    public void setJourneyService(JourneyService service) {
+        if (Objects.isNull(service))
+            throw new IllegalArgumentException("Can not create journeyService,  journey Service is empty");
+        this.journeyService = service;
+    }
+    public List<JourneyDto> findJourneys(final JourneyDto journeyDto){
+       return journeyService.findJourneys(journeyDto);
+    }
+
 
 //    public void createJourney(JourneyEntity entity) {
 //        journeyService.save(entity);
@@ -232,10 +236,10 @@ public class TicketClient {
         return stationService.count();
     }
 
-    public List<JourneyDto> findJourneys(JourneyDto journeyDto) {
-        List<JourneyDto> result = journeyService.findRelevant(journeyDto);
-        return result;
-    }
+//    public List<JourneyDto> findJourneys(JourneyDto journeyDto) {
+//        List<JourneyDto> result = journeyService.findRelevant(journeyDto);
+//        return result;
+//    }
 
     public Long getIdByName(String stationName) {
         return stationService.findOneByName(stationName).getId();

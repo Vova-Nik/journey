@@ -11,15 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.StringUtils;
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -40,42 +33,32 @@ public class JourneyAPIController {
 
     /* *************************************** test *********************************************/
     @GetMapping(
-            path = "/journey",
+            path = "/test",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    @ApiOperation(value = "just return journey", tags = "journeys")
+    @ApiOperation(value = "just return journey", tags = "journey")
     public ResponseEntity<List<JourneyDto>> test() {
         List<JourneyDto> dtos = new ArrayList<>();
-        TripEntity trip = ticketClient.getTripById(1L);
+        TripEntity trip = ticketClient.getTripById(2L);
         JourneyDto dto = new JourneyDto(trip, "Odessa", "Kyiv");
         dtos.add(dto);
         dtos.add(dto);
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
-    /* *************************************** get all *********************************************/
+    /* *************************************** find journey variamnts *********************************************/
     @PostMapping(
-            path = "/journey",
+            path = "/jour",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ApiOperation(value = "find journeys by date, station from, station to" +
-            "{     \"departure\": \"2021-07-02\",\n" +
+            "{     \"departureDate\": \"2021-07-02\",\n" +
             "      \"stationFrom\": \"Odessa\",\n" +
-            "      \"stationTo\": \"Kyiv\"}", tags = "journeys")
+            "      \"stationTo\": \"Kyiv\"}", tags = "journey")
 
     public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestBody JourneyDto journeyDto) {
-        if (StringUtils.isEmpty(journeyDto.getStationFrom()) || StringUtils.isEmpty(journeyDto.getStationTo())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        LocalDate date = null;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            date = LocalDate.parse(journeyDto.getDeparture(), formatter);
-        } catch (DateTimeParseException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
+        System.out.println("findJourneyVariants");
         List<JourneyDto> result = ticketClient.findJourneys(journeyDto);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
@@ -86,10 +69,10 @@ public class JourneyAPIController {
 /*
 http://localhost:8080/api/swagger-ui.html
 
-{     "departure": "2021-07-02",
-      "stationFrom": "Odessa",
-      "stationTo": "Kyiv"
-      }
-
+{
+ "departureDate": "2021-07-19",
+ "stationFrom": "Zh",
+ "stationTo": "Kyiv"
+}
 
         */

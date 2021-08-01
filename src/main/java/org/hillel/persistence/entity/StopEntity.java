@@ -5,8 +5,8 @@ import lombok.Setter;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import java.time.Duration;
-import java.time.Instant;
+//import java.time.Duration;
+//import java.time.Instant;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -32,7 +32,7 @@ public class StopEntity extends AbstractEntity<Long> implements Comparable<StopE
     private LocalTime arrival;
 
     @Column(name = "staying")
-    private int duration;
+    private int staying;
 
     @Column(name = "departure")
     private LocalTime departure;
@@ -43,24 +43,35 @@ public class StopEntity extends AbstractEntity<Long> implements Comparable<StopE
     @Column(name = "dayoffset")
     private Integer dayOffset;
 
+    @Column(name = "secoffset")
+    private Integer secOffset;
+
     public StopEntity() {
     }
 
-    public StopEntity(RouteEntity route, StationEntity station, LocalTime arrival, int duration) {
+    public StopEntity(RouteEntity route, StationEntity station, LocalTime arrival, int staying) {
         this.name = station.getName();
         this.route = route;
         this.station = station;
         this.arrival = arrival;
-        this.duration = duration;
-        this.departure = arrival.plusSeconds(duration);
+        this.staying = staying;
+        this.departure = arrival.plusSeconds(staying);
         this.description = "Sadis, ne zevaj";
+        this.secOffset = arrival.getHour()*3600 + arrival.getMinute()*60;
         this.dayOffset = 0;
     }
 
-    public StopEntity(RouteEntity route, StationEntity station, LocalTime arrival, int duration, int offset) {
-        this( route,  station,  arrival,  duration);
+    public StopEntity(RouteEntity route, StationEntity station, LocalTime arrival, int staying, int offset) {
+        this( route,  station,  arrival,  staying);
         this.dayOffset = offset;
+        this.secOffset = this.secOffset + offset * 3600 * 24;
     }
+
+//    public int getDuration(){
+//        int dep = departure.getHour()*3600 + departure.getMinute()*60 + departure.getSecond();
+//        int arr = arrival.getHour()*3600 + arrival.getMinute()*60 + arrival.getSecond();
+//        return dep - arr;
+//    }
 
     @Override
     public String toString() {
@@ -69,10 +80,10 @@ public class StopEntity extends AbstractEntity<Long> implements Comparable<StopE
                 ", station=" + station +
                 ", route=" + route +
                 ", arrival=" + arrival +
-                ", duration=" + duration +
                 ", departure=" + departure +
                 ", description='" + description + '\'' +
                 ", offset=" + dayOffset +
+                ", secOffset=" + secOffset +
                 '}';
     }
 
@@ -94,8 +105,7 @@ public class StopEntity extends AbstractEntity<Long> implements Comparable<StopE
     @Override
     public int compareTo(@NonNull StopEntity o) {
         if (this.equals(o)) return 0;
-        if (this.dayOffset > o.dayOffset) return 1;
-        if (this.dayOffset < o.dayOffset) return -1;
-        return this.departure.compareTo(o.departure);
+        if (!this.getRoute().equals(o.getRoute())) return 0;
+        return this.secOffset.compareTo(o.secOffset);
     }
 }

@@ -36,7 +36,7 @@ public class UserApiController {
         queryParam = new QueryParam();
     }
 
-    /* *************************************** get all *********************************************/
+    /* ***************** get all *************************/
     @GetMapping(
             path = "/user",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
@@ -55,7 +55,7 @@ public class UserApiController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
-    /* ********************************* get one user ***************************************************/
+    /* *************************** get one user ****************************/
 
     @CrossOrigin
     @GetMapping(

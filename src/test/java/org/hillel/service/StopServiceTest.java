@@ -5,8 +5,7 @@ import org.hillel.config.RootConfig;
 import org.hillel.persistence.entity.RouteEntity;
 import org.hillel.persistence.entity.StationEntity;
 import org.hillel.persistence.entity.StopEntity;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
@@ -14,6 +13,8 @@ import org.springframework.core.env.Environment;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StopServiceTest {
 
@@ -63,6 +64,17 @@ public class StopServiceTest {
 
 
     }
+//    @Test
+//    void updateSecOffset(){
+//        List<StopEntity> stops = stopService.findAll();
+//        stops.forEach(
+//                stop->{
+//                    stop.setSecOffset(stop.getDayOffset()*24*3600 + stop.getArrival().getHour()*3600 + stop.getArrival().getMinute()*60);
+//                    stopService.save(stop);
+//                }
+//        );
+//    }
+
     @Test
     void create794() {
         route = routeService.findOneByName("794К");
@@ -91,6 +103,7 @@ public class StopServiceTest {
     @Test
     void routesOnStation() {
         Set<RouteEntity> routes = stopService.findAllRoutesByStation(gmerinka);
+        assertTrue(routes.size()>1);
         System.out.println(routes);
     }
 

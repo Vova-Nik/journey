@@ -1,5 +1,6 @@
 package org.hillel.controller.rest;
 
+import org.hillel.exceptions.JourneyAPIException;
 import org.hillel.exceptions.UserAPIException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         Map<String, String> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
         body.put("message", "User API Exception");
+        body.put("exeption", ex.getMessage());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<>(body, headers, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(JourneyAPIException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> handleJourneyAPIException(
+            JourneyAPIException ex, WebRequest request) {
+
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("message", "Journey API Exception");
         body.put("exeption", ex.getMessage());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
