@@ -1,6 +1,7 @@
 package org.hillel.controller.rest;
 
 import org.hillel.exceptions.JourneyAPIException;
+import org.hillel.exceptions.SynonimAPIException;
 import org.hillel.exceptions.UserAPIException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         Map<String, String> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
         body.put("message", "Journey API Exception");
+        body.put("exeption", ex.getMessage());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<>(body, headers, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SynonimAPIException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> handleSynonimAPIException(
+            SynonimAPIException ex, WebRequest request) {
+
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("message", "Journey Synonim API Exception happened");
         body.put("exeption", ex.getMessage());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

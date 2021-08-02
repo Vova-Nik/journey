@@ -2,6 +2,7 @@ package org.hillel.service;
 
 
 import org.hillel.dto.dto.JourneyDto;
+import org.hillel.dto.dto.ProtoJourneyDto;
 import org.hillel.exceptions.JourneyAPIException;
 import org.hillel.persistence.entity.*;
 //import org.hillel.persistence.jpa.repository.JourneyJPARepository;
@@ -29,6 +30,7 @@ public class JourneyService {
     private StationJPARepository stationJPARepository;
     private RouteJPARepository routeJPARepository;
     private StopJPARepository stopJPARepository;
+    private SynonimService synonimService;
 
     @Autowired
     TripService tripService;
@@ -39,7 +41,8 @@ public class JourneyService {
             TripJPARepository tripJPARepository,
             StationJPARepository stationJPARepository,
             StopJPARepository stopJPARepository,
-            RouteJPARepository routeJPARepository) {
+            RouteJPARepository routeJPARepository,
+            SynonimService synonimService) {
 
 //        super(JourneyEntity.class, journeyRepository);
 //        this.journeyRepository = journeyRepository;
@@ -47,11 +50,14 @@ public class JourneyService {
         this.stationJPARepository = stationJPARepository;
         this.stopJPARepository = stopJPARepository;
         this.routeJPARepository = routeJPARepository;
+        this.synonimService = synonimService;
+
     }
 
 
     @Transactional(readOnly = true)
-    List<JourneyDto> findJourneys(final JourneyDto journeyDto) {
+    List<JourneyDto> findJourneys(final ProtoJourneyDto journeyDto) {
+
         LocalDate checkDate = null;
         try {
             final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -60,11 +66,13 @@ public class JourneyService {
             throw new JourneyAPIException("Can not parse Date parameter");
         }
         String stationFromName = journeyDto.getStationFrom();
+        stationFromName = synonimService.getTrueName(stationFromName);
         StationEntity stationFrom = stationJPARepository.findOneByName(stationFromName);
         if (stationFrom == null) {
             throw new JourneyAPIException("Unable to find Station from");
         }
         String stationToName = journeyDto.getStationTo();
+        stationToName = synonimService.getTrueName(stationToName);
         StationEntity stationTo = stationJPARepository.findOneByName(stationToName);
         if (stationTo == null) {
             throw new JourneyAPIException("Unable to find Station To");
@@ -72,15 +80,17 @@ public class JourneyService {
         final LocalDate date = checkDate;
         List<JourneyDto> results = new ArrayList<>();
         try {
-            List<StopEntity> stops = stopJPARepository.findStopsFromByJourney(journeyDto.getStationFrom(), journeyDto.getStationTo());
+            List<StopEntity> stops = stopJPARepository.findStopsFromByJourney(stationFromName, stationToName);
+            String finalStationFromName = stationFromName;
+            String finalStationToName = stationToName;
             stops.forEach(stop -> {
                         JourneyDto result = new JourneyDto();
-                        result.setName(journeyDto.getStationFrom() + " -> " + journeyDto.getStationTo());
+                        result.setName("From " + finalStationFromName + " to " + finalStationToName);
                         result.setStationFrom(stationFrom.getName());
                         result.setStationTo(stationTo.getName());
                         result.setDepartureTime(stop.getDeparture().toString());
 
-                        List<StopEntity> destStops  = stopJPARepository.findByRouteAndStation(stop.getRoute(), stationTo);
+                        List<StopEntity> destStops = stopJPARepository.findByRouteAndStation(stop.getRoute(), stationTo);
                         StopEntity destStop = destStops.get(0);
                         result.setArrivalTime(destStop.getArrival().toString());
                         StopEntity destination = stopJPARepository.findByRouteAndStation(stop.getRoute(), stationTo).get(0);
@@ -96,11 +106,13 @@ public class JourneyService {
                             result.setArrivalDate(rawDate.plusDays(destStop.getDayOffset()).toString());
                             result.setVehicleType(trip.getVehicle().getVehicleType().toString());
                             result.setVehicleName(trip.getVehicle().getName());
+                            result.setFreePlaces(trip.getAvailible() - trip.getSold());
+                            result.setCorrect(true);
                             results.add(result);
                         }
                     }
             );
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new JourneyAPIException(e.getMessage());
         }
 

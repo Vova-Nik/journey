@@ -32,56 +32,10 @@ public class StationService extends EntityServiceImplementation<StationEntity, L
         this.stationRepository = stationRepository;
     }
 
-//    @Transactional(readOnly = true)
-//    public boolean containsRoute(final StationEntity station, final Long routeId) {
-//        if (Objects.isNull(station) || Objects.isNull(station.getId()) || Objects.isNull(routeId))
-//            throw new IllegalArgumentException("RouteService.containsStation bad input");
-//        StationEntity st = stationRepository.findById(station.getId()).orElseThrow(() -> new IllegalArgumentException("RouteService.containsStation can not find route"));
-//        return st.containsRoute(routeId);
-//    }
-
-//    @Transactional
-//    public void addRoute(final StationEntity station, final RouteEntity route) {
-//        StationEntity st = findById(station.getId());
-//        st.addRoute(route);
-//    }
-
-//    @Transactional
-//    public void removeRoute(final StationEntity station, final RouteEntity route) {
-//        StationEntity st = findById(station.getId());
-//        st.removeRoute(route);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public Set<Long> getConnectedRoutesIds(Long id) {
-//        StationEntity st = stationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("StationService.getConnectedRoutesIds bad Id"));
-//        return st.getConnectedRoutesIds();
-//    }
-
-//    @Transactional(readOnly = true)
-//    public Set<Long> getConnectedRoutesIds(String name) {
-//        StationEntity st = stationRepository.findByName(name).get(0);
-//        return st.getConnectedRoutesIds();
-//    }
-
-//    @Transactional(readOnly = true)
-//    public Set<RouteEntity> getConnectedRoutes(Long id) {
-//        StationEntity st = stationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("StationService.getConnectedRoutes bad Id"));
-//        Set<RouteEntity> routes = new HashSet<>();
-//        Set<Long> routeIds = st.getConnectedRoutesIds();
-//        routeIds.forEach(routeId -> routes.add(routeRepository.findById(routeId).orElseThrow(() -> new IllegalArgumentException("StationService.getConnectedRoutes bad Id"))));
-//        return routes;
-//    }
-
     @Override
     @Transactional
     public void deleteById(Long id) throws UnableToRemove {
         StationEntity station = findById(id);
-//        Set<Long> routeIds = getConnectedRoutesIds(id);
-//        for (Long routeId : routeIds) {
-//            RouteEntity route = routeRepository.findById(routeId).orElseThrow(() -> new UnableToRemove("StationService.deleteById"));
-//            route.removeStation(station);
-//        }
         stationRepository.deleteById(id);
     }
 

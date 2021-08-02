@@ -12,10 +12,9 @@ import java.time.Instant;
 
 @Getter
 @Setter
-//@Builder
 @NoArgsConstructor
 public class JourneyDto {
-    private Long id;
+    private boolean correct;
     private String name;
     private String stationFrom;
     private String stationTo;
@@ -27,35 +26,39 @@ public class JourneyDto {
     private String routeDescript;
     private String vehicleType;
     private String vehicleName;
+    private int freePlaces;
+    private String comment;
 
     public JourneyDto(TripEntity trip, String stationFrom, String stationTo) {
-//        RouteEntity route = trip.getRoute();
         this.stationFrom = stationFrom;
         this.stationTo = stationTo;
         this.departureDate = trip.getDepartureDate().toString();
+    }
 
-//        this.name = route.getName();
-//        this.routeName = route.getName();
-//        this.routeDescript = trip.getDescription();
-//        this.vehicleType = trip.getVehicle().getVehicleType().toString();
-//        this.vehicleName = trip.getVehicle().getName();
-//        this.departureDate = trip.getDepartureDate().toString();
-
+    public JourneyDto(String comment) {
+        correct = false;
+        this.comment = comment;
+        if (comment.length() < 3)
+            this.comment = "There is no throw variant. Try finding over transit stations, such as Kyiv, Zhmerynka e.t.c.";
     }
 
     @Override
     public String toString() {
         return "JourneyDto{" +
-                "id=" + id +
+                "correct=" + correct +
                 ", name='" + name + '\'' +
                 ", stationFrom='" + stationFrom + '\'' +
                 ", stationTo='" + stationTo + '\'' +
-                ", departure='" + departureDate + " - " + departureTime +'\'' +
-                ", arrival='" + arrivalDate + " - " + arrivalTime + '\'' +
+                ", departureDate='" + departureDate + '\'' +
+                ", arrivalDate='" + arrivalDate + '\'' +
+                ", departureTime='" + departureTime + '\'' +
+                ", arrivalTime='" + arrivalTime + '\'' +
                 ", routeName='" + routeName + '\'' +
-                ", routeDescription='" + routeDescript + '\'' +
+                ", routeDescript='" + routeDescript + '\'' +
                 ", vehicleType='" + vehicleType + '\'' +
                 ", vehicleName='" + vehicleName + '\'' +
+                ", freePlaces=" + freePlaces +
+                ", comment='" + comment + '\'' +
                 '}';
     }
 }

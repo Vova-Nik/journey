@@ -13,7 +13,7 @@ public class JourneyMapper {
             return null;
         }
         JourneyDto journeyDto = new JourneyDto();
-        journeyDto.setId( journeyEntity.getId() );
+//        journeyDto.setId( journeyEntity.getId() );
         journeyDto.setName( journeyEntity.getName() );
 //        journeyDto.setStationFrom( journeyEntity.getStationFrom().getName() );
         journeyDto.setStationFrom( journeyEntity.getStationFrom());
@@ -39,11 +39,8 @@ public class JourneyMapper {
         if ( jorneyDto == null ) {
             return null;
         }
-
         JourneyEntity journeyEntity = new JourneyEntity();
-
-        journeyEntity.setId( jorneyDto.getId() );
-
+//        journeyEntity.setId( jorneyDto.getId() );
         return journeyEntity;
     }
 }

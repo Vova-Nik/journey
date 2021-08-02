@@ -3,6 +3,7 @@ package org.hillel.controller.rest;
 import io.swagger.annotations.ApiOperation;
 import org.hillel.dto.converter.JourneyMapper;
 import org.hillel.dto.dto.JourneyDto;
+import org.hillel.dto.dto.ProtoJourneyDto;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.persistence.entity.TripEntity;
 import org.hillel.service.TicketClient;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class JourneyAPIController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
-    /* *************************************** find journey variamnts *********************************************/
+    /* **************************** find journey variamnts ****************************************/
     @PostMapping(
             path = "/jour",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -57,22 +59,21 @@ public class JourneyAPIController {
             "      \"stationFrom\": \"Odessa\",\n" +
             "      \"stationTo\": \"Kyiv\"}", tags = "journey")
 
-    public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestBody JourneyDto journeyDto) {
-        System.out.println("findJourneyVariants");
-        List<JourneyDto> result = ticketClient.findJourneys(journeyDto);
+    public ResponseEntity<List<JourneyDto>> findJourneyVariants(@RequestBody ProtoJourneyDto protoJourneyDto) {
+        List<JourneyDto> result = ticketClient.findJourneys(protoJourneyDto);
+        if (result.size() == 0) {
+            result.add(new JourneyDto(""));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
 
-
-//http://localhost:8080/journey/api/swagger-ui.html
 /*
 http://localhost:8080/api/swagger-ui.html
 
 {
  "departureDate": "2021-07-19",
- "stationFrom": "Zh",
+ "stationFrom": "Zhmerynka",
  "stationTo": "Kyiv"
 }
-
-        */
+*/

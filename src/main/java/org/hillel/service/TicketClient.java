@@ -1,6 +1,7 @@
 package org.hillel.service;
 
 import org.hillel.dto.dto.JourneyDto;
+import org.hillel.dto.dto.ProtoJourneyDto;
 import org.hillel.dto.dto.QueryParam;
 import org.hillel.exceptions.UnableToRemove;
 import org.hillel.persistence.entity.*;
@@ -146,23 +147,9 @@ public class TicketClient {
             throw new IllegalArgumentException("Can not create journeyService,  journey Service is empty");
         this.journeyService = service;
     }
-    public List<JourneyDto> findJourneys(final JourneyDto journeyDto){
-       return journeyService.findJourneys(journeyDto);
+    public List<JourneyDto> findJourneys(final ProtoJourneyDto protoJourneyDto){
+       return journeyService.findJourneys(protoJourneyDto);
     }
-
-
-//    public void createJourney(JourneyEntity entity) {
-//        journeyService.save(entity);
-//    }
-
-//    public JourneyEntity getJourneyById(Long id) {
-//        return journeyService.findById(id);
-//    }
-
-//    public List<JourneyEntity> getAllJourneys() {
-//        return journeyService.findAllCtive();
-//    }
-
 
     /**
      * Route

@@ -2,6 +2,7 @@ package org.hillel.service;
 
 import org.hillel.config.RootConfig;
 import org.hillel.dto.dto.JourneyDto;
+import org.hillel.dto.dto.ProtoJourneyDto;
 import org.hillel.persistence.entity.JourneyEntity;
 import org.hillel.persistence.entity.StationEntity;
 import org.hillel.persistence.entity.TripEntity;
@@ -50,7 +51,7 @@ public class JourneyServiceTest {
 
     @Test
     public void findJ() {
-        JourneyDto journeyDto = new JourneyDto();
+        ProtoJourneyDto journeyDto = new ProtoJourneyDto();
         journeyDto.setStationFrom("Zhmerynka");
         journeyDto.setStationTo("Kyiv");
         journeyDto.setDepartureDate("2021-07-19");
