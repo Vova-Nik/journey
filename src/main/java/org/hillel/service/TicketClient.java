@@ -317,6 +317,18 @@ public class TicketClient {
         return stopService.findAllByStation(station);
     }
 
+    /************ synonim services **************/
+    private @Autowired
+    SynonimService synonimService;
+
+    public  List<SynonimEntity> getStationInfo() {
+        return synonimService.getStationAbreviations();
+    }
+
+    public  Map<String, String> getStationSynonimList() {
+        return synonimService.getStationSynonimList();
+    }
+
 }
 
 

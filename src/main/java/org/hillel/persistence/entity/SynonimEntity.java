@@ -21,4 +21,12 @@ public class SynonimEntity extends AbstractEntity<Long>{
         private String name;
         @Column(name = "true_name")
         private String trueName;
+
+        @Override
+        public String toString() {
+                return "SynonimEntity{" +
+                        "name='" + name + '\'' +
+                        ", trueName='" + trueName + '\'' +
+                        '}';
+        }
 }
