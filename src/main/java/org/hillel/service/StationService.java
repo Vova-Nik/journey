@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -23,8 +24,12 @@ import java.util.*;
 public class StationService extends EntityServiceImplementation<StationEntity, Long> {
 
     private final StationJPARepository stationRepository;
+
     @Autowired
     private RouteJPARepository routeRepository;
+
+    @Autowired
+    EntityManager em;
 
     @Autowired
     public StationService(StationJPARepository stationRepository) {
@@ -37,6 +42,11 @@ public class StationService extends EntityServiceImplementation<StationEntity, L
     public void deleteById(Long id) throws UnableToRemove {
         StationEntity station = findById(id);
         stationRepository.deleteById(id);
+    }
+
+    @Transactional
+    public StationEntity getByIdUsingEntManager(Long id){
+        return em.find(StationEntity.class,id);
     }
 
     @Transactional(readOnly = true)

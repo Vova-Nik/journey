@@ -37,6 +37,19 @@ class StationServiceTest {
         routeService = applicationContext.getBean(RouteService.class);
     }
 
+    @Test
+    void getByIdUsingEntManager() {
+        Long id = 12L;
+        StationEntity ste = stationService.getByIdUsingEntManager(id);
+        System.out.println("Station by id through em = " + id);
+        System.out.println(ste);
+
+        System.out.println("Station by id = " + id);
+        StationEntity ste1 = stationService.findById(id);
+        System.out.println(ste);1?>,yuiop[iuytriuyt2q]
+        assertEquals(ste1, ste);
+    }
+
 
     @Test
     void addStations() {
